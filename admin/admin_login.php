@@ -7,31 +7,31 @@ include '../components/connect.php';
 // SESSION
 
 session_start();
+if(isset($_SESSION['admin_id'])){
+   header('location:dashboard.php');
+}
 
 // LOGIN QUERIES
 
-if(isset($_POST['submit'])){
+   if(isset($_POST['submit'])){
 
-    $name = $_POST['name'];
-    $name = filter_var($name, FILTER_SANITIZE_STRING);
-    $pass = sha1($_POST['pass']);
-    $pass = filter_var($pass, FILTER_SANITIZE_STRING);
+      $name = $_POST['name'];
+      $pass = sha1($_POST['pass']);
 
-    $select_admin = $conn->prepare("SELECT * FROM `admin` WHERE name = ? AND password ?");
-    $select_admin->execute([$name, $pass]);
+      $select_admin = $conn->prepare("SELECT * FROM `admin` WHERE name = ? AND password = ?");
+      $select_admin->execute([$name, $pass]);
+      
+      if($select_admin->rowCount() > 0){
+         $fetch_admin_id = $select_admin->fetch(PDO::FETCH_ASSOC);
+         $_SESSION['admin_id'] = $fetch_admin_id['id'];
+         header('location:dashboard.php');
+      }else{
+         $message[] = 'INCORRECT USERNAME OR PASSWORD!';
+      }
 
-    // QUERY BAGO MAKAPASOK NG LOGIN KUNG TAMA ANG NASA DATABASE
-    if($select_admin->rowCount() > 0){
-        $fetch_admin_id = $select_admin->fetch(PDO::FETCH_ASSOC);
-        $_SESSION['admin_id'] = $fetch_admin_id['id'];
-        header('location:dashboard.php');
-    }else{
-        // PAG MALI NAMAN ANG USERNAME AT PASSWORD MAG THROW NG MESSAGE
-        $message[] = 'INCORRECT USERNAME OR PASSWORD';
-    }
-}
+   }
 
-?>
+   ?>
 
 <!-- LOGIN PAGE -->
 
@@ -55,6 +55,16 @@ if(isset($_POST['submit'])){
 
 // MESSAGE SA TAAS PARA KITA NG USER KUNG NAG LOGIN BA OR LOGIN FAILED
 
+if(isset($message)){
+    foreach($message as $message){
+       echo '
+       <div class="message">
+          <span>'.$message.'</span>
+          <i class="fas fa-times" onclick="this.parentElement.remove();"></i>
+       </div>
+       ';
+    }
+ }
 ?>
 
 <!-- ADMIN LOGIN STARTS -->
