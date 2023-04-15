@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600&display=swap');
+
+/* FOR ALL IN WEBSITE */
+*{
+    font-family: 'Rubik', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-decoration: underline;
+}
+
+/* FOR ALL SELECTION */
+
+*::selection{
+    background-color: #E0163D;
+    color: #222;
+}
+
+::-webkit-scrollbar{
+    height: 4px;
+    width: 8px;
+}
+
+::-webkit-scrollbar-track{
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb{
+    background-color: #E0163D;
+}
+
+html{
+    font-size: 62.5%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    scroll-padding-top: 56px;
+}
+
+section{
+    margin:0 auto;
+    max-width: 1200px;
+    padding: 16px;
+}
+
+/* HEADER */
+
+.header{
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index:1000;
+    background-color: #E0163D;
+    border-bottom: 1.6px solid #222;
+}
+
+.header .flex{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.header .flex .logo{
+    font-size: 20px;
+    color: #fff;
+}
+
+
