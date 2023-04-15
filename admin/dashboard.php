@@ -132,6 +132,7 @@ if(!isset($admin_id)){
 
 </section>
 
+
 <!-- CUSTOM ADMIN JS FILE -->
 <script src="../js/admin_script.js"></script>
 

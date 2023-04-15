@@ -15,31 +15,36 @@ if (isset($_POST['submit'])){
     $name = $_POST['name'];
     $pass = $_POST['pass'];
     $cpass = $_POST['cpass'];
+    $password_error = false; // INDICATION
 
     if (empty($pass)) {
-        $message[] = 'Password is required!';
-    } elseif (strlen($pass) < 8 || !preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/', $pass)) {
-        $message[] = 'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character!';
+        $message[] = '• Password is required!';
+        $password_error = true;
+    } elseif (strlen($pass) < 12 || !preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/', $pass)) {
+        $message[] = '• Password must be at least 12 characters long <br> 
+                      • Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character!';
+        $password_error = true;
     }
 
     if (empty($cpass)) {
-        $message[] = 'Confirm password is required!';
+        $message[] = '• Confirm password is required!';
+        $password_error = true;
     } elseif ($pass != $cpass) {
-        $message[] = 'Confirm password not matched!';
+        $message[] = '• Confirm password not matched!';
+        $password_error = true;
     }
 
-    if (empty($admin)) {
+    if (empty($admin) && !$password_error) { // CHECK THE PASSWORD BEFORE EXECUTING THE QUERY
         $select_admin = $conn->prepare("SELECT * FROM `admin` WHERE name = ?");
         $select_admin->execute([$name]);
-        $pass = sha1($pass);
         $cpass = sha1($cpass);
 
         if ($select_admin->rowCount() > 0) {
-            $message[] = 'Username already exists!';
+            $message[] = '• Username already exists!';
         } else {
             $insert_admin = $conn->prepare("INSERT INTO `admin`(name, password) VALUES(?,?)");
             $insert_admin->execute([$name, $cpass]);
-            $message[] = 'NEW ADMIN REGISTERED!';
+            $message[] = '• NEW ADMIN REGISTERED!';
         }
     }
 }
@@ -76,9 +81,9 @@ if (isset($_POST['submit'])){
 
    <form action="" method="POST">
       <h3>Register</h3>
-      <input type="text" name="name" maxlength="20" required placeholder="Enter your username" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
-      <input type="password" name="pass" maxlength="20" required placeholder="Enter your password" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
-      <input type="password" name="cpass" maxlength="20" required placeholder="Confirm your password" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
+      <input type="text" name="name" placeholder="Enter your username" class="box" required oninput="this.value = this.value.replace(/\s/g, '')">
+      <input type="password" name="pass" placeholder="Enter your password" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
+      <input type="password" name="cpass" placeholder="Confirm your password" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
       <input type="submit" value="register now" name="submit" class="btn">
    </form>
 
