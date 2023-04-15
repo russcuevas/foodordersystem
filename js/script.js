@@ -21,3 +21,12 @@ window.onscroll = () =>{
     profile.classList.remove('active');
     navbar.classList.remove('active');
  }
+
+
+
+// PRODUCT
+document.querySelectorAll('input[type="number"]').forEach(numberInput => {
+   numberInput.oninput = () =>{
+      if(numberInput.value.length > numberInput.maxLength) numberInput.value = numberInput.value.slice(0, numberInput.maxLength);
+   };
+});
