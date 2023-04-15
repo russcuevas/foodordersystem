@@ -36,6 +36,9 @@ if(isset($_SESSION['user_id'])){
 <!-- INCLUDING THE USER HEADER FILE -->
 <?php include 'components/user_header.php' ?>
 <!-- HEADER ENDS -->
-    
+
+
+<!-- CUSTOM JS USER FILE -->
+<script src="../js/script.js"></script>
 </body>
 </html>
