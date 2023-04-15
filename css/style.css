@@ -126,6 +126,45 @@ section{
     margin-bottom: 8px;
 }
 
+/* HOME */
+.home .slide{
+    display: flex;
+    flex-wrap: wrap-reverse;
+    gap:12px;
+    align-items: center;
+    margin-bottom: 32px;
+ }
+ 
+ .home .slide .content{
+    flex:1 1 320px;
+    text-align: center;
+ }
+ 
+ .home .slide .image{
+    flex:1 1 320px;
+ }
+ 
+ .home .slide .image img{
+    width: 100%;
+ }
+ 
+ .home .slide .content span{
+    font-size: 20px;
+    color:var(--light-color);
+ }
+ 
+ .home .slide .content h3{
+    font-size: 40px;
+    text-transform: capitalize;
+    color:var(--black);
+    padding:8px 0;
+ }
+
+ /* SWIPPER BUTTON */
+ .swiper-pagination-bullet-active{
+    background-color: #E0163D;
+}
+
 /* BUTTONS */
 
 .btn,
@@ -174,6 +213,60 @@ section{
 
 
 
+
+/* FOOTER / CREDIT */
+
+.footer .grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(216px, 1fr));
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.footer .grid .box{
+    border: 1.6px solid #222;
+    padding: 16px;
+    text-align: center;
+}
+
+.footer .grid .box img{
+    height: 120px;
+    width: 100%;
+    object-fit: contain;
+    margin-bottom: 4px;
+}
+
+.footer .grid .box h3{
+    margin: 8px 0;
+    font-size: 16px;
+    color: #222;
+    text-transform: capitalize;
+}
+
+.footer .grid .box p,
+.footer .grid .box a{
+    display: block;
+    font-size: 13.6px;
+    color: #777;
+    line-height: 1.8;
+}
+
+.footer .grid .box a:hover{
+    text-decoration: underline;
+}
+
+.credit{
+    padding:24px 16px;
+    text-align: center;
+    background-color: #E0163D;
+    color: #fff;
+    font-size: 16px;
+    text-transform: capitalize;
+}
+
+.credit span{
+    color: #231F20;
+}
 
 
 
@@ -231,6 +324,9 @@ section{
 
     .header .flex .logo{
         font-size: 16px;
+    }
+    .home .slide .content h3{
+        font-size: 40px;
     }
 }
 

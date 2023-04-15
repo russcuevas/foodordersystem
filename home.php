@@ -37,8 +37,71 @@ if(isset($_SESSION['user_id'])){
 <?php include 'components/user_header.php' ?>
 <!-- HEADER ENDS -->
 
+    <!-- HEADER ENDS -->
 
+    <!-- BANNER STARTS -->
+    <section class="home">
+        <div class="swiper home-slider">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide slide">
+                    <div class="content">
+                        <span>Order Online</span>
+                        <h3>Delicious burger!</h3>
+                        <a href="menu.php" class="btn">Order now!</a>
+                    </div>
+                    <div class="image">
+                        <img src="../images/banner1.png" alt="">
+                    </div>
+                </div>
+
+                <div class="swiper-slide slide">
+                    <div class="content">
+                        <span>Order Online</span>
+                        <h3>Taste adobo!</h3>
+                        <a href="menu.php" class="btn">Order now!</a>
+                    </div>
+                    <div class="image">
+                        <img src="../images/banner2.png" alt="">
+                    </div>
+                </div>
+
+                <div class="swiper-slide slide">
+                    <div class="content">
+                        <span>Order Online</span>
+                        <h3>Sweet Desserts!</h3>
+                        <a href="menu.php" class="btn">Order now!</a>
+                    </div>
+                    <div class="image">
+                        <img src="../images/banner3.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </section>
+    <!-- BANNER ENDS -->
+
+
+<!-- FOOTER STARTS -->
+<!-- INCLUDING THE FOOTER IN COMPONENTS -->
+<?php include 'components/footer.php'; ?>
+<!-- FOOTER SECTION ENDS -->
+
+<!-- SWIPER JS  -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 <!-- CUSTOM JS USER FILE -->
 <script src="../js/script.js"></script>
+
+<script>
+        var swiper = new Swiper(".home-slider", {
+            loop: true,
+            grabCursor: true,
+            effect: "flip",
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+        });
+    </script>
 </body>
 </html>
