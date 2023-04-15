@@ -19,6 +19,8 @@ if(isset($_GET['delete'])){
 
 ?>
 
+<!-- ADMIN ACCOUNT PAGE -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
