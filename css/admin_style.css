@@ -64,7 +64,7 @@ section {
 }
 
 .btn {
-    background-color: #E0163D;
+    background-color: #FA8003;
 }
 
 .delete-btn {
@@ -72,7 +72,7 @@ section {
 }
 
 .option-btn {
-    background-color: orange;
+    background-color: #FA8003;
 }
 
 .btn:hover,
@@ -102,7 +102,7 @@ section {
 }
 
 .message span {
-    font-size: 16px;
+    font-size: 20px;
     color: #fff;
 }
 
@@ -125,6 +125,16 @@ section {
     text-transform: capitalize;
     color: #231F20;
     font-size: 24px;
+}
+
+/* PLACED ORDERS NOTE */
+.heading span{
+    text-align: center;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    color: #e74c3c;
+    font-size: 12px;
+    font-weight: 600;
 }
 
 /* KAPAG WALANG LAMAN LAHAT ANG EXAMPLE USERS / ADMINS / PRODUCTS */
@@ -307,8 +317,9 @@ section {
     border-radius: 4px;
     background-color: #f5f5f5;
     border-radius: 4px;
-    font-size: 14.4px;
-    border: 1.6px solid #FA8003;
+    font-size: 16px;
+    font-weight: 900;
+    border: 1.6px solid #E0163D;
     margin: 1px 0;
     color: #231F20;
 }
@@ -371,6 +382,7 @@ section {
 
 .show-products .box-container .box .name {
     font-size: 16px;
+    font-weight: 900;
     color: #231F20;
     padding: 1px 0;
 }
@@ -383,12 +395,13 @@ section {
 }
 
 .show-products .box-container .box .flex .category {
-    font-size: 14.4px;
+    font-size: 16px;
+    font-weight: 900;
     color: #E0163D;
 }
 
 .show-products .box-container .box .flex .price {
-    font-size: 16px;
+    font-size: 20px;
     color: #231F20;
     margin: 4px 0;
 }
@@ -439,68 +452,87 @@ section {
 
 /* PLACED ORDERS */
 
-.placed-orders .box-container {
+.placed-orders .box-container{
     display: grid;
-    grid-template-columns: repeat(auto-fit, 324px);
-    gap: 14px;
+    grid-template-columns: repeat(auto-fit, 420px);
+    gap:15px;
     justify-content: center;
     align-items: flex-start;
-}
-
-.placed-orders .box-container .box {
+ }
+ 
+ .placed-orders .box-container .box{
     background-color: #fff;
-    border-radius: 4px;
+    border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
-    border: 1.6px solid #231F20;
-    padding: 16px;
-    padding-top: 1px;
-}
-
-.placed-orders .box-container .box p {
-    padding: 4px 0;
+    border: 2px solid #231F20;
+    padding:20px;
+    padding-top: 10px;
+ }
+ 
+ .placed-orders .box-container .box p{
+    padding: 5px 0;
     line-height: 1.5;
-    font-size: 14.4px;
-    color: #231F20;
-}
-
-.placed-orders .box-container .box p span {
-    color: #E0163D;
-}
-
-.placed-orders .box-container .box .drop-down {
+    font-size: 18px;
+    color:#231F20;
+ }
+ 
+ .placed-orders .box-container .box p span{
+    font-size: 15px;
+    font-weight: 900;
+    color:#E0163D;
+ }
+ 
+ .placed-orders .box-container .box .drop-down{
     width: 100%;
-    margin: 1px 0;
-    background-color: #f5f5f5;
-    padding: 1px 11.2px;
+    margin:10px 0;
+    background-color: #999;
+    padding:10px 14px;
+    font-size: 20px;
+    color:#231F20;
+    border:1.6 solid #231F20;
+    border-radius: 5px;
+ }
+
+ /* DELETE BUTTON ALL */
+ .delete-all-container {
+    margin-top: 20px;
+    text-align: center;
+ }
+ 
+ .delete-all-btn {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
     font-size: 16px;
-    color: #231F20;
-    border: 1.6px solid #231F20;
-    border-radius: 4px;
-}
+ }
 
 /* ACCOUNTS */
 
 .accounts .box-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, 325px);
-    gap: 14px;
+    grid-template-columns: repeat(auto-fit, 330px);
+    gap: 15px;
     justify-content: center;
     align-items: flex-start;
 }
 
 .accounts .box-container .box {
     background-color: #fff;
-    border-radius: 4px;
+    border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
-    border: 1.6px solid #231F20;
-    padding: 50px;
-    padding-top: 15px;
+    border: 2px solid #231F20;
+    padding: 20px;
+    padding-top: 10px;
     text-align: center;
 }
 
 .accounts .box-container .box p {
     padding: 10px 0;
     font-size: 15px;
+    font-weight: 900;
     color: #231F20;
 }
 

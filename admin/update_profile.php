@@ -65,7 +65,6 @@ if(isset($_POST['submit'])){
 
    <form action="" method="POST">
       <h3>Update Profile</h3>
-      <!-- <input type="text" name="name" required class="box" oninput="this.value = this.value.replace(/\s/g, '')" placeholder="<?= $fetch_profile['name']; ?>"> -->
       <input type="password" name="old_pass" required placeholder="Enter your old password" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
       <input type="password" name="new_pass" required placeholder="Enter your new password" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
       <input type="password" name="confirm_pass" required placeholder="Confirm your new password" class="box" oninput="this.value = this.value.replace(/\s/g, '')">

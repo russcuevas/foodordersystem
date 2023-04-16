@@ -22,7 +22,7 @@ if(isset($message)){
 
       <nav class="navbar">
          <a href="dashboard.php">Home</a>
-         <a href="products.php">Products</a>
+         <a href="products.php">Foods</a>
          <a href="placed_orders.php">Orders</a>
          <a href="admin_accounts.php">Admins</a>
          <a href="users_accounts.php">Users</a>

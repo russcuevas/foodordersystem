@@ -11,15 +11,24 @@ if(!isset($admin_id)){
 }
 
 // UPDATE STATUS QUERY
-if(isset($_POST['update_payment'])){
-
-    $order_id = $_POST['order_id'];
-    $payment_status = $_POST['payment_status'];
-    $update_status = $conn->prepare("UPDATE `orders` SET payment_status = ? WHERE id = ?");
-    $update_status->execute([$payment_status, $order_id]);
-    $message[] = 'Payment status updated!';
- 
- }
+if (isset($_POST['update_payment'])) {
+   if (isset($_POST['order_id']) && isset($_POST['payment_status'])) {
+       $order_id = $_POST['order_id'];
+       $payment_status = $_POST['payment_status'];
+       if ($payment_status === 'completed') {
+           $update_status = $conn->prepare("UPDATE `orders` SET payment_status = ? WHERE id = ?");
+           $update_status->execute([$payment_status, $order_id]);
+           $update_order = $conn->prepare("UPDATE `orders` SET order_status = 'completed' WHERE id = ?");
+           $update_order->execute([$order_id]);
+       } else {
+           $update_status = $conn->prepare("UPDATE `orders` SET payment_status = ? WHERE id = ?");
+           $update_status->execute([$payment_status, $order_id]);
+           $message[] = 'Payment status updated!';
+       }
+   } else {
+       $message[] = 'Please choose again!';
+   }
+}
  
  // DELETE STATUS QUERY
  if(isset($_GET['delete'])){
@@ -28,6 +37,13 @@ if(isset($_POST['update_payment'])){
     $delete_order->execute([$delete_id]);
     header('location:placed_orders.php');
  }
+// DELETE ALL STATUS QUERY
+if(isset($_POST['delete_all'])){
+   $delete_all_orders = $conn->prepare("DELETE FROM `orders`");
+   $delete_all_orders->execute();
+   header('location:placed_orders.php');
+}
+ 
  
  ?>
 
@@ -58,48 +74,51 @@ if(isset($_POST['update_payment'])){
 <!-- PLACED ORDERS STARTS -->
 
 <section class="placed-orders">
-   <h1 class="heading">Placed Orders</h1>
+   <h1 class="heading">All Orders <br> <span>"Note it must deleted all every end of the day!"</span></h1>
    <div class="box-container">
-    <!-- SELECTING/FETCHING ORDERS QUERY -->
-   <?php
-      $select_orders = $conn->prepare("SELECT * FROM `orders`");
-      $select_orders->execute();
-      if($select_orders->rowCount() > 0){
-         while($fetch_orders = $select_orders->fetch(PDO::FETCH_ASSOC)){
-   ?>
-   <div class="box">
-      <p> User ID : <span><?= $fetch_orders['user_id']; ?></span> </p>
-      <p> Placed on : <span><?= $fetch_orders['placed_on']; ?></span> </p>
-      <p> Name : <span><?= $fetch_orders['name']; ?></span> </p>
-      <p> Email : <span><?= $fetch_orders['email']; ?></span> </p>
-      <p> Number : <span><?= $fetch_orders['number']; ?></span> </p>
-      <p> Address : <span><?= $fetch_orders['address']; ?></span> </p>
-      <p> Total products : <span><?= $fetch_orders['total_products']; ?></span> </p>
-      <p> Total price : <span>$<?= $fetch_orders['total_price']; ?>/-</span> </p>
-      <p> Payment method : <span><?= $fetch_orders['method']; ?></span> </p>
+      <!-- SELECTING/FETCHING ORDERS QUERY -->
+      <?php
+         $select_orders = $conn->prepare("SELECT * FROM `orders`");
+         $select_orders->execute();
+         if($select_orders->rowCount() > 0){
+            while($fetch_orders = $select_orders->fetch(PDO::FETCH_ASSOC)){
+      ?>
+      <div class="box">
+         <p> User ID : <span><?= $fetch_orders['user_id']; ?></span> </p>
+         <p> Placed on : <span><?= $fetch_orders['placed_on']; ?></span> </p>
+         <p> Name : <span><?= $fetch_orders['name']; ?></span> </p>
+         <p> Email : <span><?= $fetch_orders['email']; ?></span> </p>
+         <p> Number : <span><?= $fetch_orders['number']; ?></span> </p>
+         <p> Address : <span><?= $fetch_orders['address']; ?></span> </p>
+         <p> Total products : <span><?= $fetch_orders['total_products']; ?></span> </p>
+         <p> Total price : <span>₱<?= $fetch_orders['total_price']; ?></span> </p>
+         <p> Payment method : <span><?= $fetch_orders['method']; ?></span> </p>
+         <form action="" method="POST">
+            <input type="hidden" name="order_id" value="<?= $fetch_orders['id']; ?>">
+            <select name="payment_status" class="drop-down">
+               <option value="" selected disabled><?= $fetch_orders['payment_status']; ?></option>
+               <option value="Pending">Pending</option>
+               <option value="Completed">Completed</option>
+            </select>
+            <div class="flex-btn">
+               <input type="submit" value="update" class="btn" name="update_payment">
+               <a href="placed_orders.php?delete=<?= $fetch_orders['id']; ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this order?');">Delete</a>
+            </div>
+         </form>
+      </div>
+      <?php
+         }
+      }else{
+      //PAG WALANG LAMAN ANG ORDER AY ETO ANG LALABAS
+         echo '<p class="empty">NO ORDERS PLACED!</p>';
+      }
+      ?>
+   </div>
+   <div class="delete-all-container">
       <form action="" method="POST">
-         <input type="hidden" name="order_id" value="<?= $fetch_orders['id']; ?>">
-         <select name="payment_status" class="drop-down">
-            <option value="" selected disabled><?= $fetch_orders['payment_status']; ?></option>
-            <option value="Pending">Pending</option>
-            <option value="Completed">Completed</option>
-         </select>
-         <div class="flex-btn">
-            <input type="submit" value="update" class="btn" name="update_payment">
-            <a href="placed_orders.php?delete=<?= $fetch_orders['id']; ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this order?');">Delete</a>
-         </div>
+         <input type="submit" value="Delete All" class="delete-all-btn" name="delete_all" onclick="return confirm('Are you sure you want to delete all products?');">
       </form>
    </div>
-   <?php
-      }
-   }else{
-    //PAG WALANG LAMAN ANG ORDER AY ETO ANG LALABAS
-      echo '<p class="empty">NO ORDERS PLACED!</p>';
-   }
-   ?>
-
-   </div>
-
 </section>
 
 <!-- PLACED ORDERS END -->

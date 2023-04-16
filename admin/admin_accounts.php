@@ -44,43 +44,37 @@ if(isset($_GET['delete'])){
 <!-- ADMIN ACCOUNT STARTS -->
 
 <section class="accounts">
-
    <h1 class="heading">Admins Account</h1>
-
    <div class="box-container">
-
-   <div class="box">
-      <p>REGISTER NEW ADMIN</p>
-      <a href="register_admin.php" class="option-btn">Register</a>
-   </div>
-
-   <?php
-      $select_account = $conn->prepare("SELECT * FROM `admin`");
-      $select_account->execute();
-      if($select_account->rowCount() > 0){
-         while($fetch_accounts = $select_account->fetch(PDO::FETCH_ASSOC)){  
-   ?>
-   <div class="box">
-      <p> Admin ID : <span><?= $fetch_accounts['id']; ?></span> </p>
-      <p> Username : <span><?= $fetch_accounts['name']; ?></span> </p>
-      <div class="flex-btn">
-        <?php
-            if($fetch_accounts['id'] == $admin_id){
-               echo '<a href="update_profile.php" class="option-btn">update</a>';
-            }
-         ?>
-         <a href="admin_accounts.php?delete=<?= $fetch_accounts['id']; ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this account?');">Delete</a>
+      <div class="box">
+         <p>REGISTER NEW ADMIN</p>
+         <a href="register_admin.php" class="option-btn">Register</a>
       </div>
+      <?php
+         $select_account = $conn->prepare("SELECT * FROM `admin`");
+         $select_account->execute();
+         if ($select_account->rowCount() > 0) {
+            while ($fetch_accounts = $select_account->fetch(PDO::FETCH_ASSOC)) {  
+      ?>
+      <div class="box">
+         <p> Admin ID: <span><?= $fetch_accounts['id']; ?></span> </p>
+         <p> Username: <span><?= $fetch_accounts['name']; ?></span> </p>
+         <div class="flex-btn">
+            <?php
+               if ($fetch_accounts['id'] == $admin_id) {
+                  echo '<a href="update_profile.php" class="option-btn">Update</a>';
+               }
+            ?>
+            <a href="admin_accounts.php?delete=<?= $fetch_accounts['id']; ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this account?');">Delete</a>
+         </div>
+      </div>
+      <?php
+            }
+         } else {
+            echo '<p class="empty">No Accounts Available</p>';
+         }
+      ?>
    </div>
-   <?php
-      }
-   }else{
-      echo '<p class="empty">No Accounts Available</p>';
-   }
-   ?>
-
-   </div>
-
 </section>
 
 <!-- ADMIN ACCOUNT ENDS -->

@@ -69,7 +69,7 @@ if(isset($_GET['delete'])){
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Products</title>
+   <title>Display Food</title>
 
     <!-- FONT AWESOME LINK -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -88,9 +88,9 @@ if(isset($_GET['delete'])){
 <section class="add-products">
 
    <form action="" method="POST" enctype="multipart/form-data">
-      <h3>Add Product</h3>
-      <input type="text" required placeholder="Enter product name" name="name" maxlength="100" class="box">
-      <input type="number" min="0" max="9999999999" required placeholder="Product Price ₱" name="price" onkeypress="if(this.value.length == 10) return false;" class="box">
+      <h3>Add Food</h3>
+      <input type="text" required placeholder="Food name" name="name" maxlength="100" class="box">
+      <input type="number" min="0" max="9999999999" required placeholder="Food Price ₱" name="price" onkeypress="if(this.value.length == 10) return false;" class="box">
       <select name="category" class="box" required>
          <option value="" disabled selected>Select Category --</option>
          <option value="Fast Food">Fast Food</option>
@@ -99,7 +99,7 @@ if(isset($_GET['delete'])){
          <option value="Desserts">Desserts</option>
       </select>
       <input type="file" name="image" class="box" accept="image/jpg, image/jpeg, image/png," required>
-      <input type="submit" value="add product" name="add_product" class="btn">
+      <input type="submit" value="Add Food" name="add_product" class="btn">
    </form>
 
 </section>
@@ -127,7 +127,7 @@ if(isset($_GET['delete'])){
       <div class="name"><?= $fetch_products['name']; ?></div>
       <div class="flex-btn">
          <a href="update_product.php?update=<?= $fetch_products['id']; ?>" class="option-btn">Update</a>
-         <a href="products.php?delete=<?= $fetch_products['id']; ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
+         <a href="products.php?delete=<?= $fetch_products['id']; ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this food?');">Delete</a>
       </div>
    </div>
    <?php

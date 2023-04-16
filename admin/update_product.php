@@ -53,7 +53,7 @@ if(isset($_POST['update'])){
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Update Product</title>
+   <title>Update Food</title>
 
     <!-- FONT AWESOME LINK -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -71,7 +71,7 @@ if(isset($_POST['update'])){
 
 <section class="update-product">
 
-   <h1 class="heading">Update Product</h1>
+   <h1 class="heading">Update Food</h1>
 
    <?php
       $update_id = $_GET['update'];
