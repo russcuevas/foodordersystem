@@ -53,6 +53,7 @@ include 'components/add_cart.php';
          while($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)){
    ?>
    <form action="" method="post" class="box">
+      <button style="color:white; font-weight: 900; margin:10px; padding:10px; font-size:20px; background-color:#E0163D; border-radius: 40px;" type="button" onclick="location.href='menu.php';">Go Back</button>
       <input type="hidden" name="pid" value="<?= $fetch_products['id']; ?>">
       <input type="hidden" name="name" value="<?= $fetch_products['name']; ?>">
       <input type="hidden" name="price" value="<?= $fetch_products['price']; ?>">

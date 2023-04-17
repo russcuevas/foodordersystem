@@ -74,7 +74,7 @@ if(isset($_POST['delete_all'])){
 <!-- PLACED ORDERS STARTS -->
 
 <section class="placed-orders">
-   <h1 class="heading">All Orders <br> <span>"Note it must deleted all every end of the day!"</span></h1>
+   <h1 class="heading">All Orders <br> <span>"Note the complete orders must deleted all every end of the day!"</span></h1>
    <div class="box-container">
       <!-- SELECTING/FETCHING ORDERS QUERY -->
       <?php

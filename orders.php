@@ -19,7 +19,7 @@ if(isset($_SESSION['user_id'])){
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>My Orders</title>
+   <title>Customer Receipt</title>
 
     <!-- FONT AWESOME LINK -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -33,7 +33,7 @@ if(isset($_SESSION['user_id'])){
 
 <!-- ORDERS STARTS -->
 <section class="orders">
-   <h1 class="title">Receipt</h1>
+   <h1 class="title">Customer Receipt</h1>
    <a href="home.php" class="back-btn">Go Back</a>
         <div class="box-container">
         

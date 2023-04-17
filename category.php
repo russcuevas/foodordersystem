@@ -56,7 +56,6 @@ include 'components/add_cart.php';
               <input type="hidden" name="name" value="<?= $product['name'] ?>">
               <input type="hidden" name="price" value="<?= $product['price'] ?>">
               <input type="hidden" name="image" value="<?= $product['image'] ?>">
-              <a href="quick_view.php?pid=<?= $product['id'] ?>" class="fas fa-eye"></a>
               <button type="submit" class="fas fa-shopping-cart" name="add_to_cart"></button>
               <img src="uploaded_img/<?= $product['image'] ?>" alt="">
               <h1 class="category"><?= $product['category'] ?></h1>

@@ -187,6 +187,46 @@ section{
     margin-bottom: 8px;
 }
 
+/* PROFILE ACCOUNT */
+.header .flex .profile .account{
+    margin-top: 15px;
+    font-size: 20px;
+    color:#777;
+ }
+ 
+ .header .flex .profile .account a{
+    color:#231F20;
+ }
+ 
+ .header .flex .profile .account a:hover{
+    color:#E0163D;
+    text-decoration: underline;
+ }
+
+/* USER DETAILS */
+.user-details .user img{
+    width: 100%;
+    height: 250px;
+    object-fit: contain;
+    margin-bottom: 20px;
+}
+ 
+.user-details .user p{
+    padding:10px 0;
+    line-height: 1.5;
+    font-size: 20px;
+}
+ 
+.user-details .user p span{
+    color:#231F20;
+}
+ 
+.user-details .user p i{
+    margin-right: 10px;
+    color:#777;
+}
+ 
+ 
 /* HOME */
 .home .slide{
     display: flex;
@@ -641,7 +681,6 @@ section{
     background-color: #231F20;
     color:#fff;
  }
-
  /* FOR LOGIN AND REGISTER FORM */
 
  .form-container form{

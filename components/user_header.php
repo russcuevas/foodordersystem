@@ -57,3 +57,47 @@ if(isset($message)){
       </div>
     </section>
 </header>
+
+<script>
+    // Get the current page URL
+    var current_url = window.location.href;
+
+    // Get all links in the navbar
+    var links = document.querySelectorAll('.navbar a');
+
+    // Loop through each link
+    links.forEach(function(link) {
+        // Check if the link's href matches the current URL
+        if(link.href === current_url) {
+            // Add the active class and change the style to black with an underline
+            link.classList.add('active');
+            link.style.color = "black";
+            link.style.textDecoration = "underline";
+            link.style.fontWeight = "bold";
+        } else {
+            // Remove the active class and reset the style to white with no underline
+            link.classList.remove('active');
+            link.style.color = "white";
+            link.style.textDecoration = "none";
+            link.style.fontWeight = "normal";
+        }
+
+        // Add hover effects
+        link.addEventListener('mouseover', function() {
+            link.style.color = "black";
+            link.style.textDecoration = "underline";
+            link.style.fontWeight = "bold";
+        });
+
+        link.addEventListener('mouseout', function() {
+            if(link.classList.contains('active')) {
+                link.style.color = "black";
+                link.style.textDecoration = "underline";
+            } else {
+                link.style.color = "white";
+                link.style.fontWeight = "normal";
+                link.style.textDecoration = "none";
+            }
+        });
+    });
+</script>
