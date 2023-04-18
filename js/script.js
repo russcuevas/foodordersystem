@@ -30,3 +30,14 @@ document.querySelectorAll('input[type="number"]').forEach(numberInput => {
       if(numberInput.value.length > numberInput.maxLength) numberInput.value = numberInput.value.slice(0, numberInput.maxLength);
    };
 });
+
+// FOR LOADING PAGE
+function loading(){
+   document.querySelector('.loading').style.display = 'none';
+}
+
+function fadeOut(){
+   setInterval(loading, 1000);
+}
+
+window.onload = fadeOut;

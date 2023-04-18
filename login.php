@@ -67,7 +67,7 @@ if(isset($_POST['submit'])){
       <input type="email" name="email" required placeholder="Enter your email" class="box" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
       <input type="password" name="pass" required placeholder="Enter your password" class="box" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
       <input type="submit" value="login now" name="submit" class="btn">
-      <p>don't have an account? <a href="register.php">register now</a></p>
+      <p>Don't have an account? <a href="register.php">register now!</a></p>
    </form>
 
 </section>
@@ -79,19 +79,7 @@ if(isset($_POST['submit'])){
 
 
 
-
-
-
-
-
-<?php include 'components/footer.php'; ?>
-
-
-
-
-
-
-<!-- custom js file link  -->
+<!-- CUSTOM JS LINK  -->
 <script src="js/script.js"></script>
 
 </body>

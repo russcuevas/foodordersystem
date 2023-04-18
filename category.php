@@ -52,6 +52,7 @@ include 'components/add_cart.php';
           foreach ($products as $product) {
            ?>
             <form action="" method="post" class="box">
+            <button style="color:white; font-weight: 900; padding: 5px; margin-bottom: 5px; font-size:20px; background-color:#E0163D; border-radius: 40px; cursor:pointer;" type="button" onclick="location.href='home.php';">Go Back</button>
               <input type="hidden" name="pid" value="<?= $product['id'] ?>">
               <input type="hidden" name="name" value="<?= $product['name'] ?>">
               <input type="hidden" name="price" value="<?= $product['price'] ?>">

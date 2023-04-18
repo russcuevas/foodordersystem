@@ -28,3 +28,7 @@
         </section>
         <div class="credit">Created by <span>Russel & Archie</span> | Eat well and all rights reserved!</div>
 </footer>
+
+<div class="loading">
+    <img src="images/loading.gif" alt="">
+</div>

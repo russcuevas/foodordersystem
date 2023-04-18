@@ -470,9 +470,10 @@ section {
  }
  
  .placed-orders .box-container .box p{
-    padding: 5px 0;
+    padding: 7px 0;
     line-height: 1.5;
-    font-size: 18px;
+    font-size: 15px;
+    font-weight: 700;
     color:#231F20;
  }
  

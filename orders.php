@@ -1,17 +1,22 @@
 <?php
 
+// INCLUDING DATABASE CONNECTION
 include 'components/connect.php';
 
+// SESSION START
 session_start();
 
+// IF THE USER IS LOGIN
 if(isset($_SESSION['user_id'])){
    $user_id = $_SESSION['user_id'];
+// ELSE IT WILL SHOW
 }else{
    $user_id = '';
-   header('location:home.php');
+   echo "<div style='background-color: #f8d7da; color: #721c24; padding: 10px; font-size:25px; text-align:center;'> <a href='login.php'>Login </a> first to see your receipt!</div>";
 };
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +36,7 @@ if(isset($_SESSION['user_id'])){
 </head>
 <body>
 
-<!-- ORDERS STARTS -->
+<!-- CUSTOMER RECEIPT STARTS -->
 <section class="orders">
    <h1 class="title">Customer Receipt</h1>
    <a href="home.php" class="back-btn">Go Back</a>
@@ -68,4 +73,4 @@ if(isset($_SESSION['user_id'])){
         ?>
     </div>
 </section>
-<!-- ORDERS END -->
+<!-- CUSTOMER RECEIPT END -->

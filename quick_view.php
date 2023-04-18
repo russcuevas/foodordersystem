@@ -1,16 +1,20 @@
 <?php
 
+// INCLUDING DATABASE CONNECTION
 include 'components/connect.php';
 
+// SESSION STARTS
 session_start();
-
+// IF USER LOGIN
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
+// IF NOT LOGIN
 } else {
     $user_id = '';
 }
 ;
 
+// INCLUDING ADD CART COMPONENTS
 include 'components/add_cart.php';
 
 ?>
@@ -53,7 +57,7 @@ include 'components/add_cart.php';
          while($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)){
    ?>
    <form action="" method="post" class="box">
-      <button style="color:white; font-weight: 900; margin:10px; padding:10px; font-size:20px; background-color:#E0163D; border-radius: 40px;" type="button" onclick="location.href='menu.php';">Go Back</button>
+      <button style="color:white; font-weight: 900; margin:10px; padding:10px; font-size:20px; background-color:#E0163D; border-radius: 40px; cursor:pointer;" type="button" onclick="location.href='menu.php';">Go Back</button>
       <input type="hidden" name="pid" value="<?= $fetch_products['id']; ?>">
       <input type="hidden" name="name" value="<?= $fetch_products['name']; ?>">
       <input type="hidden" name="price" value="<?= $fetch_products['price']; ?>">

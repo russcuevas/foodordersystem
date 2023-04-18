@@ -122,7 +122,7 @@ if(isset($_POST['submit'])){
    <input type="hidden" name="address" value="<?= $fetch_profile['address'] ?>">
 
    <div class="user-info">
-      <h3>Your Info</h3>
+      <h3>My Information</h3>
       <p><i class="fas fa-user"></i> <span> <?= $fetch_profile['name'] ?></span></p>
       <p><i class="fas fa-phone"></i> <span> <?= $fetch_profile['number'] ?></span></p>
       <p><i class="fas fa-envelope"></i> <span><?= $fetch_profile['email'] ?></span></p>
@@ -132,8 +132,10 @@ if(isset($_POST['submit'])){
          <option value="" disabled selected>SELECT PAYMENT METHOD --</option>
          <option value="Cash on delivery">Cash on delivery</option>
          <option value="GCASH">GCASH</option>
-         <option value="Credit Card">Credit Card</option>
       </select>
+      <div class="gcash">
+      <span id="gcashnum">STORE GCASH Number: 09483284522 </span>
+      </div>
       <input type="submit" value="place order" class="btn <?php if($fetch_profile['address'] == ''){echo 'disabled';} ?>" style="width:100%; background:#E0163D; color:#fff;" name="submit">
    </div>
 

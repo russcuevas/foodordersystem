@@ -71,7 +71,7 @@ if(isset($message)){
         if(link.href === current_url) {
             // Add the active class and change the style to black with an underline
             link.classList.add('active');
-            link.style.color = "black";
+            link.style.color = "#222";
             link.style.textDecoration = "underline";
             link.style.fontWeight = "bold";
         } else {
@@ -84,14 +84,14 @@ if(isset($message)){
 
         // Add hover effects
         link.addEventListener('mouseover', function() {
-            link.style.color = "black";
+            link.style.color = "#222";
             link.style.textDecoration = "underline";
             link.style.fontWeight = "bold";
         });
 
         link.addEventListener('mouseout', function() {
             if(link.classList.contains('active')) {
-                link.style.color = "black";
+                link.style.color = "#222";
                 link.style.textDecoration = "underline";
             } else {
                 link.style.color = "white";
