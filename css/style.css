@@ -456,6 +456,68 @@ section {
     color: #231F20;
 }
 
+/* PAGINATION COLOR */
+/* .custom-pagination .page-item.active .page-link {
+    background-color: #E0163D;
+    border-color: #E0163D;
+    color: #fff;
+}
+.custom-pagination .page-item .page-link {
+    color: #E0163D;
+} */
+
+.pagination-container {
+  margin-top: 20px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pagination li {
+  margin: 0;
+  padding: 0;
+  border: 1px solid #dee2e6;
+  font-size: 16px;
+}
+
+.pagination li.active {
+  background-color: #E0163D;
+  color: #fff;
+  border: 1px solid #E0163D;
+  width: 50px;
+  height: 40px;
+  padding: 10px;
+  text-align: center;
+}
+
+.pagination li a {
+  display: block;
+  padding: 10px 12px;
+  text-decoration: none;
+  width: 50px;
+  height: 40px;
+  padding: 10px;
+  text-align: center;
+  color: #222;
+}
+
+.pagination li a:hover {
+  background-color: #e9ecef;
+  color: #E0163D;
+}
+
+
+
+
+
+
+
 /* MY CART PRODUCT */
 
 .products .box-container .box .flex .fa-edit {
