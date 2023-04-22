@@ -53,12 +53,12 @@ if(isset($_SESSION['user_id'])){
             while($fetch_orders = $select_orders->fetch(PDO::FETCH_ASSOC)){
         ?>
         <div class="box">
-            <p>Date order : <span><?= $fetch_orders['placed_on']; ?></span></p>
+            <p>Date Order : <span><?= $fetch_orders['placed_on']; ?></span></p>
             <p>Name : <span><?= $fetch_orders['name']; ?></span></p>
             <p>Email : <span><?= $fetch_orders['email']; ?></span></p>
             <p>Number : <span><?= $fetch_orders['number']; ?></span></p>
             <p>Address : <span><?= $fetch_orders['address']; ?></span></p>
-            <p>Payment method : <span><?= $fetch_orders['method']; ?></span></p>
+            <p>Payment Method : <span><?= $fetch_orders['method']; ?></span></p>
             <p>Your orders : <span><?= $fetch_orders['total_products']; ?></span></p>
             <p>Total price : <span>₱<?= $fetch_orders['total_price']; ?></span></p>
             <p> Payment status : <span style="color:<?php if($fetch_orders['payment_status'] == 'pending'){ echo 'red'; }else{ echo 'green'; }; ?>"><?= $fetch_orders['payment_status']; ?></span> </p>
@@ -74,3 +74,6 @@ if(isset($_SESSION['user_id'])){
     </div>
 </section>
 <!-- CUSTOMER RECEIPT END -->
+
+</body>
+</head>

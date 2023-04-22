@@ -719,9 +719,49 @@ section {
     color: #231F20;
 }
 
+.pwgenerator {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.generate {
+    padding: 10px;
+    width: 320px;
+    font-size: 16px;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 4px;
+    background-color: #e74c3c;
+    color: #fff;
+}
+
+.generate::placeholder {
+    color: #fff;
+}
+
+#generatePassword {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #2196f3;
+    color: #fff;
+    cursor: pointer;
+}
+
 .form-container form p a:hover {
     text-decoration: underline;
 }
+
+
 
 /* DESIGN FOR ALL THE MESSAGE */
 .message {
@@ -960,9 +1000,41 @@ section {
 }
 
 .footer .grid .box {
-    border: 2px solid #222;
+    border: none;
+    box-shadow: 0 0 8px 2px #ffffff, 0 0 10px rgb(238, 77, 77);
     padding: 16px;
     text-align: center;
+    position: relative;
+}
+
+.footer .grid .box::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border: none;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.footer .grid .box:hover::before {
+    opacity: 1;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(34,34,34, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(34,34,34, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(34,34,34, 0);
+    }
 }
 
 .footer .grid .box img {
@@ -987,9 +1059,17 @@ section {
     line-height: 1.8;
 }
 
+.footer .grid .box:hover img,
+.footer .grid .box:hover h3,
+.footer .grid .box:hover p,
+.footer .grid .box:hover a {
+  transform: scale(1.1);
+}
+
 .footer .grid .box a:hover {
     text-decoration: underline;
 }
+
 
 .credit {
     padding: 24px 16px;
@@ -1022,6 +1102,15 @@ section {
     html {
         font-size: 55%;
     }
+
+    .generate {
+        width: 240px;
+        font-size: 14px;
+    }
+
+    #generatePassword {
+        font-size: 14px;
+    }
 }
 
 @media (max-width:768px) {
@@ -1051,6 +1140,15 @@ section {
     .header .flex .navbar.active {
         clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
     }
+
+    .generate {
+        width: 180px;
+        font-size: 12px;
+    }
+
+    #generatePassword {
+        font-size: 12px;
+    }
 }
 
 @media (max-width:450px) {
@@ -1062,6 +1160,18 @@ section {
     /* FOR ALL TITLE */
     .title {
         font-size: 24px;
+    }
+
+    .generate {
+        width: 100%;
+        font-size: 13px;
+        padding: 13px;
+    }
+
+    #generatePassword {
+        font-size: 12px;
+        width: 60%;
+        padding: 8px 16px;
     }
 
     /* NAVBAR HEADER */

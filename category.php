@@ -79,25 +79,9 @@ include 'components/add_cart.php';
 </section>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- INCLUDING FOOTER -->
-<?php include 'components/footer.php';?>
-<!-- FOOTER ENDS -->
+<div class="loading">
+    <img src="images/loading.gif" alt="">
+</div>
 
 
 <!-- SWIPER JS  -->

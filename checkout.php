@@ -127,7 +127,7 @@ if(isset($_POST['submit'])){
       <p><i class="fas fa-phone"></i> <span> <?= $fetch_profile['number'] ?></span></p>
       <p><i class="fas fa-envelope"></i> <span><?= $fetch_profile['email'] ?></span></p>
       <p><i class="fas fa-map-marker-alt"> </i><span> <?php if($fetch_profile['address'] == ''){echo 'Enter your address first!';}else{echo $fetch_profile['address'];} ?></span></p>
-      <a href="update_profile.php" class="btn">Update Info</a>
+      <!-- <a href="update_profile.php" class="btn">Update Info</a> -->
       <select name="method" class="box" required>
          <option value="" disabled selected>SELECT PAYMENT METHOD --</option>
          <option value="Cash on delivery">Cash on delivery</option>
