@@ -53,7 +53,7 @@ include 'components/add_cart.php';
 
    <div class="box-container">
       <?php
-// Set up pagination variables
+      // Set up pagination variables
       $limit = 6; // Number of products to display per page
       $page = isset($_GET['page']) ? $_GET['page'] : 1; // Current page number
       $start = ($page - 1) * $limit; // Starting point for displaying products

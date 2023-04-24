@@ -27,8 +27,7 @@ if(isset($_POST['submit'])){
    } elseif($new_pass != $confirm_pass){
        $message[] = '• Confirm password not matched!';
    } elseif(!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/', $_POST['new_pass'])) {
-       $message[] = '• Password must be at least 12 characters long <br> 
-                     • Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character!';
+       $message[] = '• Password must be at least 12 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character!';
    } else {
        // UPDATE PASSWORD IN THE DATABASE
        $update_pass = $conn->prepare("UPDATE `admin` SET password = ? WHERE id = ?");

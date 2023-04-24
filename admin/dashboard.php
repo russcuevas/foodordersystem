@@ -108,17 +108,6 @@ if(!isset($admin_id)){
 
    <div class="box">
       <?php
-         $select_admins = $conn->prepare("SELECT * FROM `admin`");
-         $select_admins->execute();
-         $numbers_of_admins = $select_admins->rowCount();
-      ?>
-      <h3><?= $numbers_of_admins; ?></h3>
-      <p>Admins</p>
-      <a href="admin_accounts.php" class="btn">View Admins</a>
-   </div>
-
-   <div class="box">
-      <?php
          $select_messages = $conn->prepare("SELECT * FROM `messages`");
          $select_messages->execute();
          $numbers_of_messages = $select_messages->rowCount();
