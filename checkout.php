@@ -18,15 +18,10 @@ if(isset($_SESSION['user_id'])){
 if(isset($_POST['submit'])){
 
     $name = $_POST['name'];
-    $name = filter_var($name, FILTER_SANITIZE_STRING);
     $number = $_POST['number'];
-    $number = filter_var($number, FILTER_SANITIZE_STRING);
     $email = $_POST['email'];
-    $email = filter_var($email, FILTER_SANITIZE_STRING);
     $method = $_POST['method'];
-    $method = filter_var($method, FILTER_SANITIZE_STRING);
     $address = $_POST['address'];
-    $address = filter_var($address, FILTER_SANITIZE_STRING);
     $total_products = $_POST['total_products'];
     $total_price = $_POST['total_price'];
  
