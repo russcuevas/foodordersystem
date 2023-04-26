@@ -176,22 +176,17 @@ include 'components/add_cart.php';
 <!-- CUSTOM JS FILE -->
 <script src="js/script.js"></script>
 
-<script>
-
-var swiper = new Swiper(".home-slider", {
-   loop:true,
-   grabCursor: true,
-   autoplay: {
-        delay: 2500,
-        disableOnInteraction: false,
-      },
-   pagination: {
-      el: ".swiper-pagination",
-      clickable:true,
-   },
-});
-
-</script>
+    <script>
+        var swiper = new Swiper(".home-slider", {
+            loop: true,
+            grabCursor: true,
+            effect: "flip",
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+        });
+    </script>
 
 </body>
 </html>
