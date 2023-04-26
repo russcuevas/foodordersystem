@@ -56,21 +56,6 @@ if(isset($_SESSION['user_id'])){
 
 
 
-
-
-
-
-
-
-<!-- INCLUDING FOOTER -->
-<?php include 'components/footer.php';?>
-<!-- FOOTER ENDS -->
-
-
-
-
-
-
 <!-- CUSTOM JS FILE -->
 <script src="js/script.js"></script>
 

@@ -17,6 +17,8 @@ if(isset($_SESSION['user_id'])){
 // DELETE CART QUERY
 if(isset($_POST['delete'])){
    $cart_id = $_POST['cart_id'];
+
+   // EXECUTING
    $delete_cart_item = $conn->prepare("DELETE FROM `cart` WHERE id = ?");
    $delete_cart_item->execute([$cart_id]);
    $message[] = '• Cart item deleted!';
@@ -33,7 +35,8 @@ if(isset($_POST['delete_all'])){
 if(isset($_POST['update_qty'])){
    $cart_id = $_POST['cart_id'];
    $qty = $_POST['qty'];
-   $qty = filter_var($qty, FILTER_SANITIZE_STRING);
+
+   // EXECUTING
    $update_qty = $conn->prepare("UPDATE `cart` SET quantity = ? WHERE id = ?");
    $update_qty->execute([$qty, $cart_id]);
    $message[] = '• Cart quantity updated';
