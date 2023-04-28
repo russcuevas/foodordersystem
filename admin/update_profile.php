@@ -63,7 +63,7 @@ if(isset($_POST['submit'])){
 <section class="form-container">
 
    <form action="" method="POST">
-      <h3>Update Profile</h3>
+      <h3 style="margin-bottom: 15px;">Update Profile</h3>
       <input type="password" name="old_pass" required placeholder="Enter your old password" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
       <input type="password" name="new_pass" required placeholder="Enter your new password" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
       <input type="password" name="confirm_pass" required placeholder="Confirm your new password" class="box" oninput="this.value = this.value.replace(/\s/g, '')">

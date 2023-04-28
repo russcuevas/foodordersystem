@@ -1,26 +1,26 @@
 <?php 
 
 // INCLUDING CONNECTION TO DATABASE
-
 include '../components/connect.php';
 
 // SESSION
-
 session_start();
 if(isset($_SESSION['admin_id'])){
    header('location:dashboard.php');
 }
 
 // LOGIN QUERIES
+if(isset($_POST['submit'])){
 
-   if(isset($_POST['submit'])){
+   $name = $_POST['name'];
+   $pass = sha1($_POST['pass']);
 
-      $name = $_POST['name'];
-      $pass = sha1($_POST['pass']);
-
+   if(empty($name) || empty($pass)){
+      $message[] = 'PLEASE ENTER USERNAME AND PASSWORD FIRST!';
+   }else{
       $select_admin = $conn->prepare("SELECT * FROM `admin` WHERE name = ? AND password = ?");
       $select_admin->execute([$name, $pass]);
-      
+
       if($select_admin->rowCount() > 0){
          $fetch_admin_id = $select_admin->fetch(PDO::FETCH_ASSOC);
          $_SESSION['admin_id'] = $fetch_admin_id['id'];
@@ -28,10 +28,12 @@ if(isset($_SESSION['admin_id'])){
       }else{
          $message[] = 'INCORRECT USERNAME OR PASSWORD!';
       }
-
    }
 
-   ?>
+}
+
+?>
+
 
 <!-- LOGIN PAGE -->
 
@@ -71,8 +73,8 @@ if(isset($message)){
 
 <section class="form-container">
     <form action="" method="POST">
-        <h3>Login</h3>
-        <h4>AUTHORIZE BY ADMIN ONLY!</h4>
+        <h3 style="font-size : 35px;">Admin | Login</h3>
+        <h4 style="color: red; margin-top: 15px; font-size: 12px;">"GRANT ACCESS AUTHORIZE BY ADMIN ONLY!"</h4>
         <input type="text" class="box" name="name" placeholder ="Enter your username" oninput="this.value = this.value.replace(/\s/g, '')">
         <input type="password" class="box" name="pass" placeholder ="Enter your password" oninput="this.value = this.value.replace(/\s/g, '')">
         <input type="submit" class="btn" name="submit" value="Login">
