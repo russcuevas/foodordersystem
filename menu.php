@@ -47,85 +47,46 @@ include 'components/add_cart.php';
 <section class="products">
    <h1 class="title">Available Food</h1>
    <form action="" method="get" class="search-form">
-      <input type="text" name="search" placeholder="Search here..">
+      <input type="text" id="searchInput" name="search" onkeyup="searchProducts()" placeholder="Search here..">
       <button type="submit" class="fas fa-search"></button>
    </form>
 
-   <div class="box-container">
+   <div id="productContainer" class="box-container">
       <?php
-      // Set up pagination variables
-      $limit = 6; // Number of products to display per page
-      $page = isset($_GET['page']) ? $_GET['page'] : 1; // Current page number
-      $start = ($page - 1) * $limit; // Starting point for displaying products
-
       // SEARCH QUERY
-      if (isset($_GET['search'])) {
-         $search = $_GET['search'];
-         $count_products = $conn->prepare("SELECT COUNT(*) FROM `products` WHERE `name` LIKE '%$search%' OR `category` LIKE '%$search%'");
-         $select_products = $conn->prepare("SELECT * FROM `products` WHERE `name` LIKE '%$search%' OR `category` LIKE '%$search%' LIMIT $start, $limit");
-      } else {
-         $count_products = $conn->prepare("SELECT COUNT(*) FROM `products`");
-         $select_products = $conn->prepare("SELECT * FROM `products` LIMIT $start, $limit");
-      }
+      $search = isset($_GET['search']) ? $_GET['search'] : '';
+      $select_products = $conn->prepare("SELECT * FROM `products` WHERE `name` LIKE '%$search%' OR `category` LIKE '%$search%'");
 
-         $count_products->execute();
-         $total = $count_products->fetchColumn();
+      $select_products->execute();
 
-         $select_products->execute();
-
-         if ($select_products->rowCount() > 0) {
-            while ($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)) {
-               ?>
+      if ($select_products->rowCount() > 0) {
+         while ($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)) {
+            ?>
             <form action="" method="post" class="box">
-                  <input type="hidden" name="pid" value="<?=$fetch_products['id'];?>">
-                  <input type="hidden" name="name" value="<?=$fetch_products['name'];?>">
-                  <input type="hidden" name="price" value="<?=$fetch_products['price'];?>">
-                  <input type="hidden" name="image" value="<?=$fetch_products['image'];?>">
-                  <a href="quick_view.php?pid=<?=$fetch_products['id'];?>" class="fas fa-eye"></a>
-                  <button type="submit" class="fas fa-shopping-cart" name="add_to_cart"></button>
-                  <img src="uploaded_img/<?=$fetch_products['image'];?>" alt="">
-                  <a href="category.php?category=<?=$fetch_products['category'];?>" class="cat"><?=$fetch_products['category'];?></a>
-                  <div class="name"><?=$fetch_products['name'];?></div>
-                  <div class="flex">
-                     <div class="price"><span>₱</span><?=$fetch_products['price'];?></div>
-                     <input type="number" name="qty" class="qty" min="1" max="99" value="1" maxlength="2">
-                  </div>
+               <input type="hidden" name="pid" value="<?= $fetch_products['id']; ?>">
+               <input type="hidden" name="name" value="<?= $fetch_products['name']; ?>">
+               <input type="hidden" name="price" value="<?= $fetch_products['price']; ?>">
+               <input type="hidden" name="image" value="<?= $fetch_products['image']; ?>">
+               <a href="quick_view.php?pid=<?= $fetch_products['id']; ?>" class="fas fa-eye"></a>
+               <button type="submit" class="fas fa-shopping-cart" name="add_to_cart"></button>
+               <img src="uploaded_img/<?= $fetch_products['image']; ?>" alt="">
+               <a href="category.php?category=<?= $fetch_products['category']; ?>" class="cat"><?= $fetch_products['category']; ?></a>
+               <div class="name"><?= $fetch_products['name']; ?></div>
+               <div class="flex">
+                  <div class="price"><span style="color: red;">₱</span><?= $fetch_products['price']; ?></div>
+                  <input type="number" name="qty" class="qty" min="1" max="99" value="1" maxlength="2">
+               </div>
             </form>
          <?php
-            }
-            } else {
-               echo '<p class="empty">No Products Found!</p>';
-            }
-         ?>
+         }
+      } else {
+         echo '<p class="empty">No Products Found!</p>';
+      }
+      ?>
    </div>
-      <div class="pagination-container">
-         <ul class="pagination">
-
-         <?php
-            $total_pages = ceil($total / $limit);
-            $start_page = max($page - 2, 1);
-            $end_page = min($start_page + 4, $total_pages);
-
-            if ($page > 1) {
-               echo '<li><a href="?page=' . ($page - 1) . '" style="color:#E0163D;"> &lt;&lt; </a></li>';
-            }
-
-            for ($i = $start_page; $i <= $end_page; $i++) {
-               if ($i == $page) {
-                  echo '<li class="active">' . $i . '</li>';
-               } else {
-                  echo '<li><a href="?page=' . $i . '">' . $i . '</a></li>';
-               }
-            }
-
-            if ($page < $total_pages) {
-               echo '<li><a href="?page=' . ($page + 1) . '" style="color:#E0163D;"> &gt;&gt; </a></li>';
-            }
-            ?>
-
-         </ul>
-      </div>
 </section>
+
+
 
 <!-- FOOD MENU ENDS -->
 
@@ -138,6 +99,34 @@ include 'components/add_cart.php';
 
 <!-- CUSTOM JS FILE -->
 <script src="js/script.js"></script>
+<script>
+function searchProducts() {
+   var input = document.getElementById('searchInput');
+   var filter = input.value.toUpperCase();
+   var boxes = document.getElementsByClassName('box');
+   var noProductsMessage = document.getElementById('noProductsMessage');
+
+   var productsFound = false; // Flag to track if any products are found
+
+   for (var i = 0; i < boxes.length; i++) {
+      var name = boxes[i].getElementsByClassName('name')[0];
+      var category = boxes[i].getElementsByClassName('cat')[0];
+      if (name.innerText.toUpperCase().indexOf(filter) > -1 || category.innerText.toUpperCase().indexOf(filter) > -1) {
+         boxes[i].style.display = '';
+         productsFound = true;
+      } else {
+         boxes[i].style.display = 'none';
+      }
+   }
+
+   // Show or hide the "No Products Found" message
+   if (productsFound) {
+      noProductsMessage.style.display = 'none';
+   } else {
+      noProductsMessage.style.display = 'block';
+   }
+}
+</script>
 
 </body>
 </html>

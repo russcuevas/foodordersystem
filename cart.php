@@ -91,11 +91,11 @@ $grand_total = 0;
             while($fetch_cart = $select_cart->fetch(PDO::FETCH_ASSOC)){
       ?>
       <form action="" method="post" class="box">
-         <input type="hidden" name="cart_id" value="<?= $fetch_cart['id']; ?>">
-         <button type="submit" class="fas fa-times" name="delete" onclick="return confirm('Are you sure you want to delete this food?');"></button>
-         <img src="uploaded_img/<?= $fetch_cart['image']; ?>" alt="">
-         <div class="name"><?= $fetch_cart['name']; ?></div>
-         <div class="flex">
+            <input type="hidden" name="cart_id" value="<?= $fetch_cart['id']; ?>">
+            <button type="submit" class="fas fa-times" name="delete" onclick="return confirm('Are you sure you want to delete this food?');"></button>
+            <img src="uploaded_img/<?= $fetch_cart['image']; ?>" alt="">
+            <div class="name"><?= $fetch_cart['name']; ?></div>
+            <div class="flex">
             <div class="price"><span>₱</span><?= $fetch_cart['price']; ?></div>
             <input type="number" name="qty" class="qty" min="1" max="99" value="<?= $fetch_cart['quantity']; ?>" maxlength="2">
             <button type="submit" class="fas fa-edit" name="update_qty"></button>
@@ -127,23 +127,6 @@ $grand_total = 0;
 </section>
 
 <!-- SHOPPING CART ENDS -->
-
-
-
-
-
-
-
-
-
-
-<!-- INCLUDING FOOTER -->
-<?php include 'components/footer.php';?>
-<!-- FOOTER ENDS -->
-
-
-
-
 
 
 

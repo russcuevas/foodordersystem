@@ -12,7 +12,7 @@ if (isset($_SESSION['user_id'])) {
 // ELSE IT WILL SHOW
 } else {
     $user_id = '';
-    echo "<div style='background-color: #f8d7da; color: #721c24; padding: 20px; font-size:25px; text-align:center; text-transform: uppercase;'> <a style='text-decoration: underline;' href='login.php'>Login </a> first to see your COD receipt!</div>";
+    echo "<div style='background-color: #f8d7da; color: #721c24; padding: 20px; font-size:25px; text-align:center; text-transform: uppercase;'> <a style='!important; text-decoration: underline;' href='login.php'>Login </a> first to see your GCASH receipt!</div>";
 };
 
 ?>
@@ -40,21 +40,23 @@ if (isset($_SESSION['user_id'])) {
 
 <!-- CUSTOMER RECEIPT STARTS -->
 <section class="orders">
-   <h1 style="text-decoration: none;" class="title">COD Receipt</h1>
+   <h1 style="text-decoration: none;" class="title">GCASH RECEIPT</h1>
    <a href="home.php" class="back-btn">Go Back</a>
    <div class="box-container">
         <?php
         if ($user_id == '') {
             // echo '<p class="empty"></p>';
         } else {
-            // THIS QUERY IS FOR CASH ON DELIVERY (COD) PAYMENT METHOD
-            $select_orders = $conn->prepare("SELECT * FROM `orders` WHERE user_id = ? AND method = 'CASH ON DELIVERY'");
+            // THIS QUERY IS FOR GCASH PAYMENT METHOD
+            $select_orders = $conn->prepare("SELECT * FROM `orders` WHERE user_id = ? AND method = 'GCASH'");
             $select_orders->execute([$user_id]);
             if ($select_orders->rowCount() > 0) {
                 while ($fetch_orders = $select_orders->fetch(PDO::FETCH_ASSOC)) {
                     $total_price = $fetch_orders['total_price'];
-                    if ($fetch_orders['method'] == 'CASH ON DELIVERY') {
+                    if ($fetch_orders['method'] == 'GCASH') {
                         $total_price = $fetch_orders['total_price'];
+                        $gcash_amount = $fetch_orders['gcash_amount'];
+                        $change_amount = $fetch_orders['change_amount'];
                         ?>
                         <div class="box">
                             <p>Date Ordered: <span><?=$fetch_orders['placed_on'];?></span></p>
@@ -63,13 +65,17 @@ if (isset($_SESSION['user_id'])) {
                             <p>Number: <span><?=$fetch_orders['number'];?></span></p>
                             <p>Address: <span><?=$fetch_orders['address'];?></span></p>
                             <p>Payment Method: <span><?=$fetch_orders['method'];?></span></p>
+                            <p>Reference Number: <span style="color: red;"><?=$fetch_orders['reference_number'];?></span></p>
                             <p>Your orders: <span><?=$fetch_orders['total_products'];?></span></p>
-                            <p>Total price: <span>₱<?=$total_price;?></span></p>
+                            <p>Total price: <span>₱<?=$total_price;?></span></p> 
+                            <p>Amount you pay: <span>₱<?=$gcash_amount?></span></p>
+                            <p>Change amount: <span>₱<?=$change_amount;?></span></p>
                             <p>Payment status: <span style="color:<?php if ($fetch_orders['payment_status'] == 'Pending') {echo 'red';} else {echo 'green';}
                             ;?>"><?=$fetch_orders['payment_status'];?></span> </p>
                             <?php 
                             if ($fetch_orders['payment_status'] == 'Paid') {
                                 echo '<button class="print-btn" onclick="window.print()">Print Receipt</button>';
+                                // echo '<div style="margin-top: 15px; margin-bottom: 12px;"><a style="background-color: blue;" class="print-btn" href="gcash_confirmation.php">Check GCASH Receipt</a></div>';
                             }
                             ?>
                         </div>
@@ -77,7 +83,7 @@ if (isset($_SESSION['user_id'])) {
                     }
                 }
             } else {
-                echo '<p class="empty">No COD orders found.</p>';
+                echo '<p class="empty">No GCASH orders found.</p>';
             }
         }
         ?>

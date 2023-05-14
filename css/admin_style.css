@@ -128,7 +128,7 @@ section {
 }
 
 /* PLACED ORDERS NOTE */
-.heading span{
+.heading span {
     text-align: center;
     margin-bottom: 16px;
     text-transform: uppercase;
@@ -182,49 +182,49 @@ section {
 
 /* PAGINATION */
 .pagination-container {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 
 .pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 .pagination li {
-  margin: 0;
-  padding: 0;
-  border: 1px solid #dee2e6;
-  font-size: 16px;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #dee2e6;
+    font-size: 16px;
 }
 
 .pagination li.active {
-  background-color: #E0163D;
-  color: #fff;
-  border: 1px solid #E0163D;
-  width: 50px;
-  height: 40px;
-  padding: 10px;
-  text-align: center;
+    background-color: #E0163D;
+    color: #fff;
+    border: 1px solid #E0163D;
+    width: 50px;
+    height: 40px;
+    padding: 10px;
+    text-align: center;
 }
 
 .pagination li a {
-  display: block;
-  padding: 10px 12px;
-  text-decoration: none;
-  width: 50px;
-  height: 40px;
-  padding: 10px;
-  text-align: center;
-  color: #222;
+    display: block;
+    padding: 10px 12px;
+    text-decoration: none;
+    width: 50px;
+    height: 40px;
+    padding: 10px;
+    text-align: center;
+    color: #222;
 }
 
 .pagination li a:hover {
-  background-color: #e9ecef;
-  color: #E0163D;
+    background-color: #e9ecef;
+    color: #E0163D;
 }
 
 /* KAPAG WALANG LAMAN LAHAT ANG EXAMPLE USERS / ADMINS / PRODUCTS */
@@ -378,7 +378,10 @@ section {
 
 .dashboard .box-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
+    /* change to three columns */
+    grid-template-rows: repeat(2, 1fr);
+    /* add two rows */
     gap: 14px;
     align-items: flex-start;
 }
@@ -542,55 +545,55 @@ section {
 
 /* PLACED ORDERS */
 
-.placed-orders .box-container{
+.placed-orders .box-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, 420px);
-    gap:15px;
+    gap: 15px;
     justify-content: center;
     align-items: flex-start;
- }
- 
- .placed-orders .box-container .box{
+}
+
+.placed-orders .box-container .box {
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
     border: 2px solid #231F20;
-    padding:20px;
+    padding: 20px;
     padding-top: 10px;
- }
- 
- .placed-orders .box-container .box p{
+}
+
+.placed-orders .box-container .box p {
     padding: 7px 0;
     line-height: 1.5;
     font-size: 15px;
     font-weight: 700;
-    color:#231F20;
- }
- 
- .placed-orders .box-container .box p span{
+    color: #231F20;
+}
+
+.placed-orders .box-container .box p span {
     font-size: 15px;
     font-weight: 900;
-    color:#E0163D;
- }
- 
- .placed-orders .box-container .box .drop-down{
-    width: 100%;
-    margin:10px 0;
-    background-color: #999;
-    padding:10px 14px;
-    font-size: 20px;
-    color:#231F20;
-    border:1.6 solid #231F20;
-    border-radius: 5px;
- }
+    color: #E0163D;
+}
 
- /* DELETE BUTTON ALL */
- .delete-all-container {
+.placed-orders .box-container .box .drop-down {
+    width: 100%;
+    margin: 10px 0;
+    background-color: #999;
+    padding: 10px 14px;
+    font-size: 20px;
+    color: #231F20;
+    border: 1.6 solid #231F20;
+    border-radius: 5px;
+}
+
+/* DELETE BUTTON ALL */
+.delete-all-container {
     margin-top: 20px;
     text-align: center;
- }
- 
- .delete-all-btn {
+}
+
+.delete-all-btn {
     background-color: #e74c3c;
     color: #fff;
     border: none;
@@ -598,7 +601,7 @@ section {
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
- }
+}
 
 /* ACCOUNTS */
 
@@ -688,6 +691,28 @@ section {
 }
 
 @media (max-width:768px) {
+
+    .dashboard .box-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(6, 1fr);
+    }
+
+    .dashboard .box-container .box {
+        padding: 30px;
+    }
+
+    .dashboard .box-container .box h3 {
+        font-size: 24px;
+    }
+
+    .dashboard .box-container .box h3 span {
+        font-size: 20px;
+    }
+
+    .dashboard .box-container .box p {
+        padding: 10px;
+        font-size: 14px;
+    }
 
     #menu-btn {
         display: inline-block;

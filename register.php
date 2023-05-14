@@ -95,12 +95,12 @@ if(isset($_POST['submit'])){
 
 <form action="register.php" method="post">
     <h3>Register to order!</h3>
-    <input type="text" name="name" placeholder="Enter your name" class="box">
-    <input type="email" name="email" required placeholder="Enter your email" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
-    <input type="number" name="number" required placeholder="Enter your number" class="box" min="0" max="9999999999" maxlength="11">
-    <input type="text" name="address" required placeholder="Enter your address" class="box">
+    <input type="text" name="name" placeholder="Enter your name" class="box" value="<?php echo isset($_POST['name']) ? $_POST['name'] : ''; ?>">
+    <input type="email" name="email" required placeholder="Enter your email" class="box" oninput="this.value = this.value.replace(/\s/g, '')" value="<?php echo isset($_POST['email']) ? $_POST['email'] : ''; ?>">
+    <input type="number" name="number" required placeholder="Enter your number" class="box" min="0" max="9999999999" maxlength="11" value="<?php echo isset($_POST['number']) ? $_POST['number'] : ''; ?>">
+    <input type="text" name="address" required placeholder="Enter your address" class="box" value="<?php echo isset($_POST['address']) ? $_POST['address'] : ''; ?>">
     <input type="password" name="pass" required placeholder="Enter your password" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
-    <h6 style="text-align: start; color: #6D5D6E; font-size: 13px;">Note : <span style="color: red; font-size:12px;">"Dont give your password to anyone else"</span></h6>
+    <h6 style="text-align: start; color: #6D5D6E; font-size: 13px;">Note : <span style="color: red; font-size:12px;">"Don't give your password to anyone else"</span></h6>
     <input type="password" name="cpass" required placeholder="Confirm your password" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
     <input type="submit" value="register now" name="submit" class="btn">
     <p>Already have an account? <a href="login.php">login now</a></p>

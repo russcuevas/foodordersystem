@@ -7,11 +7,26 @@ include 'components/connect.php';
 session_start();
 
 // SESSION IF THE USER IS LOGIN
-if(isset($_SESSION['user_id'])){
+if (isset($_SESSION['user_id'])) {
    $user_id = $_SESSION['user_id'];
-}else{
+
+   // Retrieve user information from the database using the $user_id
+   // Example code: 
+   $select_user = $conn->prepare("SELECT name, email, number FROM `users` WHERE id = ?");
+   $select_user->execute([$user_id]);
+   
+
+   // Check if the user exists
+   if ($select_user->rowCount() > 0) {
+      $user = $select_user->fetch();
+      $name = $user['name'];
+      $email = $user['email'];
+      $number = $user['number'];
+   }
+} else {
    $user_id = '';
-};
+}
+
 
 // QUERY FOR MESSAGE
 if(isset($_POST['send'])){
@@ -80,15 +95,14 @@ if(isset($_POST['send'])){
          <img src="images/contact.png" alt="">
       </div>
 
-      <form action="" method="post">
-         <h3>Tell us something!</h3>
-         <input type="text" name="name" maxlength="50" class="box" placeholder="Enter your name" required>
-         <input type="number" name="number" min="0" max="9999999999" class="box" placeholder="Enter your number" required maxlength="11">
-         <input type="email" name="email" maxlength="50" class="box" placeholder="Enter your email" required>
-         <textarea name="msg" class="box" required placeholder="Enter your message" maxlength="500" cols="30" rows="10"></textarea>
-         <input type="submit" value="send message" name="send" class="btn">
-      </form>
-
+<form action="" method="post">
+    <h3>Tell us something!</h3>
+    <input type="text" name="name" maxlength="50" class="box" placeholder="Enter your name" required value="<?php echo isset($name) ? $name : ''; ?>">
+    <input type="number" name="number" min="0" max="9999999999" class="box" placeholder="Enter your number" required value="<?php echo isset($number) ? $number : ''; ?>" maxlength="11">
+    <input type="email" name="email" maxlength="50" class="box" placeholder="Enter your email" required value="<?php echo isset($email) ? $email : ''; ?>">
+    <textarea name="msg" class="box" required placeholder="Enter your message" maxlength="500" cols="30" rows="10"></textarea>
+    <input type="submit" value="send message" name="send" class="btn">
+</form>
    </div>
 
 </section>

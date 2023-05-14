@@ -75,6 +75,8 @@ if(isset($_GET['delete'])){
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <!-- CUSTOM ADMIN CSS FILE -->
    <link rel="stylesheet" href="../css/admin_style.css">
 
@@ -110,43 +112,35 @@ if(isset($_GET['delete'])){
 <!-- SEARCH START -->
 <section class="search-section">
    <form action="" method="get" class="search-form">
-      <input type="text" name="search" placeholder="Search...">
+      <input type="text" id="searchInput" name="search" placeholder="Search...">
       <button type="submit"><i class="fa fa-search"></i></button>
    </form>
 </section>
 
+
 <section class="show-products" style="padding-top: 0;">
-
    <div class="box-container">
-   
       <?php
-         $limit = 6; // number of items to show per page
-         $page = isset($_GET['page']) ? $_GET['page'] : 1; // get current page from URL
-         $offset = ($page - 1) * $limit; // calculate offset for SQL query
-
          // check if search query is set
          if (isset($_GET['search'])) {
             $search = $_GET['search'];
-            $count_products = $conn->prepare("SELECT COUNT(*) FROM `products` WHERE `name` LIKE '%$search%' OR `category` LIKE '%$search%'");
-            $select_products = $conn->prepare("SELECT * FROM `products` WHERE `name` LIKE '%$search%' OR `category` LIKE '%$search%' LIMIT $offset, $limit");
+            $select_products = $conn->prepare("SELECT * FROM `products` WHERE `name` LIKE :search OR `category` LIKE :search");
+            $select_products->bindValue(':search', "%$search%", PDO::PARAM_STR);
          } else {
-            $count_products = $conn->prepare("SELECT COUNT(*) FROM `products`");
-            $select_products = $conn->prepare("SELECT * FROM `products` LIMIT $offset, $limit");
+            $select_products = $conn->prepare("SELECT * FROM `products`");
          }
          
-         $count_products->execute();
-         $total_items = $count_products->fetchColumn(); // count total items in the table
-         $total_pages = ceil($total_items / $limit); // calculate total pages needed
-         
          $select_products->execute();
-         if($select_products->rowCount() > 0){
-            while($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)){  
+         $productsCount = $select_products->rowCount();
+
+         if ($productsCount > 0) {
+            while ($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)) {  
       ?>
       <div class="box">
          <img src="../uploaded_img/<?= $fetch_products['image']; ?>" alt="">
          <div class="flex">
-            <div class="price"><span>₱</span><?= $fetch_products['price']; ?><span></span></div>
-            <div class="category">Category <br> <?= $fetch_products['category']; ?></div>
+            <div class="price"><span style="color: red;">₱</span><?= $fetch_products['price']; ?><span></span></div>
+            <div class="category"><span><?= $fetch_products['category']; ?></span></div>
          </div>
          <div class="name"><?= $fetch_products['name']; ?></div>
          <div class="flex-btn">
@@ -156,43 +150,14 @@ if(isset($_GET['delete'])){
       </div>
       <?php
             }
-         }else{
+         } else {
             echo '<p class="empty">No Products Found!</p>';
          }
       ?>
-      
    </div>
-   
-<div class="pagination-container">
-   <ul class="pagination">
-      
-   <?php
-      if ($total_pages > 1) { // display pagination if more than one page
-         // link to previous page
-         if ($page > 1) {
-            echo '<li><a href="?page='.($page - 1).'" style="color:#E0163D;"> &lt;&lt; </a></li>';
-         }
-
-         for ($i=1; $i<=$total_pages; $i++) {
-            if ($i == $page) {
-               echo '<li class="active">'.$i.'</a></li>';
-            } else {
-               echo '<li><a href="?page='.$i.'">'.$i.'</a></li>';
-            }
-         }
-
-         // link to next page
-         if ($page < $total_pages) {
-            echo '<li><a href="?page='.($page + 1).'" style="color:#E0163D;"> &gt;&gt; </a></li>';
-         }
-      }
-   ?>
-   </ul>
-</div>
-
-
-
 </section>
+
+
 
 
 <!-- SHOW PRODUCTS END -->
@@ -200,7 +165,39 @@ if(isset($_GET['delete'])){
 
 
 <!-- CUSTOM ADMIN JS -->
+<script>
+   const searchInput = document.getElementById('searchInput');
+   const boxContainer = document.querySelector('.box-container');
+   const emptyMessage = document.querySelector('.empty');
+
+   searchInput.addEventListener('input', searchProducts);
+
+   function searchProducts() {
+      const filter = searchInput.value.toUpperCase();
+      const boxes = boxContainer.getElementsByClassName('box');
+
+      let productsFound = false;
+
+      for (let i = 0; i < boxes.length; i++) {
+         const name = boxes[i].querySelector('.name');
+         const category = boxes[i].querySelector('.category');
+         if (name.innerText.toUpperCase().includes(filter) || category.innerText.toUpperCase().includes(filter)) {
+            boxes[i].style.display = '';
+            productsFound = true;
+         } else {
+            boxes[i].style.display = 'none';
+         }
+      }
+
+      if (productsFound) {
+         emptyMessage.style.display = 'none';
+      } else {
+         emptyMessage.style.display = 'block';
+      }
+   }
+</script>
 <script src="../js/admin_script.js"></script>
+         
 
 </body>
 </html>

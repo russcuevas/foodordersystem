@@ -49,7 +49,6 @@ if(isset($_SESSION['user_id'])){
 <!-- BREADCRUMBS END -->
 
 <!-- ABOUT SECTION STARTS -->
-
     <section class="about">
         <div class="row">
             <div class="image">

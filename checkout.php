@@ -40,7 +40,7 @@ if(isset($_POST['submit'])){
           $delete_cart = $conn->prepare("DELETE FROM `cart` WHERE user_id = ?");
           $delete_cart->execute([$user_id]);
  
-          $message[] = '• Order Placed Successfully';
+          header ('location: orders.php');
        }
        
     }else{
@@ -83,7 +83,7 @@ if(isset($_POST['submit'])){
 
    <h1 class="title">Order Summary</h1>
 
-<form action="" method="post">
+   <form action="" method="post" onsubmit="return redirectPaymentMethod();">
 
    <div class="cart-items">
       <h3>Cart Items</h3>
@@ -125,12 +125,13 @@ if(isset($_POST['submit'])){
       <!-- <a href="update_profile.php" class="btn">Update Info</a> -->
       <select name="method" class="box" required>
          <option value="" disabled selected>SELECT PAYMENT METHOD --</option>
-         <option value="Cash on delivery">Cash on delivery</option>
+         <option value="CASH ON DELIVERY">CASH ON DELIVERY</option>
          <option value="GCASH">GCASH</option>
       </select>
-      <div class="gcash">
-      <span id="gcashnum">STORE GCASH Number: 09483284522 </span>
-      </div>
+      <!-- <div class="gcash">
+         <span id="gcashnum">STORE GCASH Number: 09483284522 </span>
+      </div> -->
+      <div id="gcash-info"></div>
       <input type="submit" value="place order" class="btn <?php if($fetch_profile['address'] == ''){echo 'disabled';} ?>" style="width:100%; background:#E0163D; color:#fff;" name="submit">
    </div>
 
@@ -139,15 +140,39 @@ if(isset($_POST['submit'])){
 </section>
 <!-- CHECKOUT END -->
 
-<!-- INCLUDING FOOTER -->
-<?php include 'components/footer.php';?>
-<!-- FOOTER ENDS -->
-
-
 <!-- SWIPER JS  -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 <!-- CUSTOM JS FILE -->
 <script src="js/script.js"></script>
+<script>
+   document.querySelector('select[name="method"]').addEventListener('change', function() {
+      if (this.value === 'GCASH') {
+         document.querySelector('#gcash-info').innerHTML = '<p><span style="color: red; font-size: 15px;">"CLICK PLACE ORDER TO PROCEED IN GCASH PAYMENT"</span></p>';
+      } else {
+         document.querySelector('#gcash-info').innerHTML = '';
+      }
+   });
+
+  function redirectPaymentMethod() {
+  var paymentMethod = document.getElementsByName("method")[0].value;
+  if (paymentMethod === "GCASH") {
+    // Check if the cart is empty
+    <?php 
+      $check_cart = $conn->prepare("SELECT * FROM `cart` WHERE user_id = ?");
+      $check_cart->execute([$user_id]);
+      $cart_items = $check_cart->fetchAll(PDO::FETCH_ASSOC);
+      if (count($cart_items) === 0) { 
+    ?>
+      alert("YOUR CART IS EMPTY PLEASE ADD FOOD TO YOUR CART BEFORE PROCEEDING TO GCASH PAYMENT!");
+      return false;
+    <?php } else { ?>
+      window.location.href = "gcash_payment.php";
+      return false;
+    <?php } ?>
+  }
+  return true;
+}
+</script>
 
 
 </body>
