@@ -72,7 +72,77 @@ include 'components/add_cart.php';
           echo '<p class="empty">Sorry no food available!</p>';
         }
       } else {
-        header('location:home.php');
+        echo '
+        <style>
+        .category .box-container {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(216px, 1fr));
+          gap: 12px;
+          align-items: flex-start;
+      }
+      
+      .category .box-container .box {
+          background-color: white;
+          border-radius: 20px;
+          border: 2px solid #231F20;
+          box-shadow: 0 0 0 2px rgba(224, 22, 61, 0.2),
+              0 0 0 4px rgba(224, 22, 61, 0.1),
+              0 0 20px rgba(224, 22, 61, 0.1);
+          padding: 16px;
+          text-align: center;
+      }
+      
+      .category .box-container .box img {
+          width: 100%;
+          height: 80px;
+          object-fit: contain;
+      }
+      
+      .category .box-container .box h3 {
+          font-size: 16px;
+          margin-top: 12px;
+          color: #231F20;
+          text-transform: capitalize;
+      }
+      
+      .category .box-container .box:hover {
+          background-color: #231F20;
+      }
+      
+      .category .box-container .box:hover img {
+          filter: invert(1);
+      }
+      
+      .category .box-container .box:hover h3 {
+          color: #fff;
+      }
+      
+      </style>
+        <section class="category">
+        <div class="box-container">
+     
+           <a href="category.php?category=fast food" class="box">
+              <img src="images/cat-1.png" alt="">
+              <h3 style="text-align: center;">Fast Food</h3>
+           </a>
+     
+           <a href="category.php?category=main dish" class="box">
+              <img src="images/cat-2.png" alt="">
+              <h3>Main Dish</h3>
+           </a>
+     
+           <a href="category.php?category=drinks" class="box">
+              <img src="images/cat-3.png" alt="">
+              <h3>Drinks</h3>
+           </a>
+     
+           <a href="category.php?category=desserts" class="box">
+              <img src="images/cat-4.png" alt="">
+              <h3>Desserts</h3>
+           </a>
+     
+        </div>
+     </section>';
       }
     ?>
   </div>

@@ -59,7 +59,6 @@ if(isset($_POST['submit'])){
 
 <!-- LOGIN FORM START -->
 <section class="form-container">
-
    <form action="" method="post">
       <h3>Login!</h3>
       <input type="email" name="email" required placeholder="Enter your email" class="box" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
@@ -67,8 +66,8 @@ if(isset($_POST['submit'])){
       <h6 style="text-align: start; color: #6D5D6E; font-size: 13px; margin-bottom: 5px;">Note : <span style="color: red; font-size:12px;">"Dont give your password to anyone else"</span></h6>
       <input type="submit" value="login now" name="submit" class="btn">
       <p>Don't have an account? <a href="register.php">register now!</a></p>
+      <p><a href="forgot_password.php" style="color: red;">Forgot your password?</a></p>
    </form>
-
 </section>
 
 <!-- LOGIN FORM END -->
