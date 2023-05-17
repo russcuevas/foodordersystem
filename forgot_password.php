@@ -35,7 +35,7 @@ if (isset($_POST['submit'])) {
         ini_set('smtp_port', $smtp_port);
 
         if (mail($to, $subject, $message, $headers)) {
-            $message = 'A password reset link has been sent to your email address. Please check your inbox.';
+            $message = 'A password reset link has been sent to your email address. <br> <a style="color : red; cursor : pointer; text-decoration: underline;" href="http://localhost:8025/">Click here to check your inbox.</a>';
         } else {
             $message = 'Error while sending a reset link password, please try again.';
         }
@@ -52,14 +52,15 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/forgot_password.css">
     <title>Forgot Password</title>
 </head>
 <body>
-<section class="form-container">
+<section class="forgot-password">
    <form action="" method="POST">
       <h3>Forgot Password</h3>
         <?php if (!empty($message)) {
-            echo "<p>$message</p>";
+            echo "<p style='color: black;'>$message</p>";
         } ?>
         <input type="email" name="email" required placeholder="Enter your email" class="box" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
         <input type="submit" value="Reset Password" name="submit" class="btn">
@@ -71,3 +72,4 @@ if (isset($_POST['submit'])) {
 
 </body>
 </html>
+

@@ -77,10 +77,10 @@ if (isset($message)) {
 
         <div class="icons">
             <?php
-$count_cart_items = $conn->prepare("SELECT * FROM `cart` WHERE user_id = ?");
-$count_cart_items->execute([$user_id]);
-$total_cart_items = $count_cart_items->rowCount();
-?>
+            $count_cart_items = $conn->prepare("SELECT * FROM `cart` WHERE user_id = ?");
+            $count_cart_items->execute([$user_id]);
+            $total_cart_items = $count_cart_items->rowCount();
+            ?>
             <a href="cart.php"><i class="fas fa-shopping-cart"></i><span>(<?=$total_cart_items;?>)</span></a>
             <div id="user-btn" class="fas fa-user"></div>
             <div id="menu-btn" class="fas fa-bars"></div>
