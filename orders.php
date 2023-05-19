@@ -65,6 +65,7 @@ if (isset($_SESSION['user_id'])) {
                             <p>Payment Method: <span><?=$fetch_orders['method'];?></span></p>
                             <p>Your orders: <span><?=$fetch_orders['total_products'];?></span></p>
                             <p>Total price: <span>₱<?=$total_price;?></span></p>
+                            <p>Delivery Rider : <span><?=$fetch_orders['riders']?> </span></p>
                             <p>Payment status: <span style="color:<?php if ($fetch_orders['payment_status'] == 'Pending') {echo 'red';} else {echo 'green';}
                             ;?>"><?=$fetch_orders['payment_status'];?></span> </p>
                             <?php 

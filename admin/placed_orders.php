@@ -93,6 +93,7 @@ if (isset($_POST['delete_all'])) {
                 <p> Food ordered : <span><?=$fetch_orders['total_products'];?></span> </p>
                 <p> Total price : <span>₱<?=$fetch_orders['total_price'];?></span> </p>
                 <p> Payment method : <span><?=$fetch_orders['method'];?></span> </p>
+                <p> Delivery Rider : <span><?=$fetch_orders['riders']; ?></span></p>
                 <form action="" method="POST">
                     <input type="hidden" name="order_id" value="<?=$fetch_orders['id'];?>">
                     <select name="payment_status" class="drop-down">
@@ -108,10 +109,9 @@ if (isset($_POST['delete_all'])) {
             </div>
             <?php
         } else {
-            //PAG WALANG LAMAN ANG ORDER AY ETO ANG LALABAS
-            $total_price = $fetch_orders['total_price']; // set default value for total price
+            $total_price = $fetch_orders['total_price'];
             if ($fetch_orders['method'] == 'GCASH') {
-                $total_price = $fetch_orders['total_price']; // change value to gcash_amount if method is GCASH
+                $total_price = $fetch_orders['total_price'];
                 $gcash_amount = $fetch_orders['gcash_amount'];
                 $change_amount = $fetch_orders['change_amount'];
             }
@@ -124,7 +124,7 @@ if (isset($_POST['delete_all'])) {
             <p>Number : <span><?=$fetch_orders['number'];?></span></p>
             <p>Address : <span><?=$fetch_orders['address'];?></span></p>
             <p>Food ordered : <span><?=$fetch_orders['total_products'];?></span></p>
-            <p>Total price : <span>₱<?=$total_price;?></span></p> <!-- use modified total price value here -->
+            <p>Total price : <span>₱<?=$total_price;?></span></p>
             <p>Amount Paid : <span>₱<?=$gcash_amount?></span></p>
             <p>To change : <span>₱<?=$change_amount;?></span></p>
             <p>Payment Method : <span><?=$fetch_orders['method'];?></span></p>

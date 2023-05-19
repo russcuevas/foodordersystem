@@ -13,43 +13,46 @@ if(isset($_SESSION['user_id'])){
    header('location:home.php');
 };
 
+// Fetch riders data for the riders option
+$stmt = $conn->prepare("SELECT id, name FROM riders");
+$stmt->execute();
+$riders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // CHECKOUT QUERY
 if(isset($_POST['submit'])){
-
     $name = $_POST['name'];
     $number = $_POST['number'];
     $email = $_POST['email'];
     $method = $_POST['method'];
     $address = $_POST['address'];
+    $riders = $_POST['riders'];
     $total_products = $_POST['total_products'];
     $total_price = $_POST['total_price'];
- 
+
     $check_cart = $conn->prepare("SELECT * FROM `cart` WHERE user_id = ?");
     $check_cart->execute([$user_id]);
- 
+
     if($check_cart->rowCount() > 0){
- 
+
        if($address == ''){
           $message[] = '• Please add your address';
        }else{
-          
-          $insert_order = $conn->prepare("INSERT INTO `orders`(user_id, name, number, email, method, address, total_products, total_price) VALUES(?,?,?,?,?,?,?,?)");
-          $insert_order->execute([$user_id, $name, $number, $email, $method, $address, $total_products, $total_price]);
- 
+
+          $insert_order = $conn->prepare("INSERT INTO `orders`(user_id, name, number, email, method, address, riders, total_products, total_price) VALUES(?, ?,?,?,?,?,?,?,?)");
+          $insert_order->execute([$user_id, $name, $number, $email, $method, $address, $riders, $total_products, $total_price]);
+
           $delete_cart = $conn->prepare("DELETE FROM `cart` WHERE user_id = ?");
           $delete_cart->execute([$user_id]);
- 
+
           header ('location: orders.php');
        }
-       
+
     }else{
        $message[] = '• Your Cart is Empty';
     }
- 
- }
- 
- ?>
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -59,13 +62,12 @@ if(isset($_POST['submit'])){
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Checkout</title>
 
-    <!-- FONT AWESOME LINK -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+   <!-- FONT AWESOME LINK -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
    <!-- CSS LINK  -->
    <link rel="stylesheet" href="css/style.css">
-
 </head>
 <body>
     
@@ -122,15 +124,17 @@ if(isset($_POST['submit'])){
       <p><i class="fas fa-phone"></i> <span> <?= $fetch_profile['number'] ?></span></p>
       <p><i class="fas fa-envelope"></i> <span><?= $fetch_profile['email'] ?></span></p>
       <p><i class="fas fa-map-marker-alt"> </i><span> <?php if($fetch_profile['address'] == ''){echo 'Enter your address first!';}else{echo $fetch_profile['address'];} ?></span></p>
-      <!-- <a href="update_profile.php" class="btn">Update Info</a> -->
-      <select name="method" class="box" required>
+      <select name="method" class="box" id="payment-method" required onchange="showRidersOption()">
          <option value="" disabled selected>SELECT PAYMENT METHOD --</option>
          <option value="CASH ON DELIVERY">CASH ON DELIVERY</option>
          <option value="GCASH">GCASH</option>
       </select>
-      <!-- <div class="gcash">
-         <span id="gcashnum">STORE GCASH Number: 09483284522 </span>
-      </div> -->
+      <select name="riders" class="box" id="riders-option" style="display: none;">
+         <option disabled selected>Select a rider</option>
+         <?php foreach ($riders as $rider): ?>
+            <option value="<?= $rider['name'] ?>"><?= $rider['name'] ?></option>
+         <?php endforeach; ?>
+      </select>
       <div id="gcash-info"></div>
       <input type="submit" value="place order" class="btn <?php if($fetch_profile['address'] == ''){echo 'disabled';} ?>" style="width:100%; background:#E0163D; color:#fff;" name="submit">
    </div>
@@ -172,6 +176,16 @@ if(isset($_POST['submit'])){
   }
   return true;
 }
+      function showRidersOption() {
+         var paymentMethod = document.getElementById("payment-method");
+         var ridersOption = document.getElementById("riders-option");
+
+         if (paymentMethod.value === "CASH ON DELIVERY") {
+            ridersOption.style.display = "block";
+         } else {
+            ridersOption.style.display = "none";
+         }
+      }
 </script>
 
 
