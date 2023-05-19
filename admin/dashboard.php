@@ -94,6 +94,17 @@ if(!isset($admin_id)){
 
    <div class="box">
       <?php
+         $select_riders = $conn->prepare("SELECT * FROM `riders`");
+         $select_riders->execute();
+         $numbers_of_riders = $select_riders->rowCount();
+      ?>
+      <h3><?= $numbers_of_riders; ?></h3>
+      <p>Total Riders</p>
+      <a href="manage_riders.php" class="btn">View Riders</a>
+   </div>
+
+   <div class="box">
+      <?php
          $select_messages = $conn->prepare("SELECT * FROM `messages`");
          $select_messages->execute();
          $numbers_of_messages = $select_messages->rowCount();

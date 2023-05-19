@@ -100,7 +100,7 @@ if(isset($_POST['update'])){
       <input type="file" name="image" class="box" accept="image/jpg, image/jpeg, image/png, image/webp">
       <div class="flex-btn">
          <input type="submit" value="Update" class="btn" name="update">
-         <a href="products.php" class="option-btn">Go Back</a>
+         <a href="riders.php" style="background-color: #e74c3c;" class="option-btn" onmouseover="this.style.backgroundColor='#231F20';" onmouseout="this.style.backgroundColor='#e74c3c';">Go Back</a>
       </div>
    </form>
    <?php

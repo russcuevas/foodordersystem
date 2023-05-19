@@ -34,16 +34,18 @@ if(isset($message)){
          <div id="user-btn" class="fas fa-user"></div>
       </div>
 
-      <div class="profile">
-         <?php
-            $select_profile = $conn->prepare("SELECT * FROM `riders` WHERE id = ?");
-            $select_profile->execute([$riders_id]);
-            $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
-         ?>
-         <p><?= $fetch_profile['name']; ?></p>
-         <a href="update_profile.php" class="btn">Update Profile</a>
-         <a href="../components/rider_logout.php" class="delete-btn">Logout</a>
-      </div>
+   <div class="profile">
+      <?php
+         $select_profile = $conn->prepare("SELECT * FROM `riders` WHERE id = ?");
+         $select_profile->execute([$riders_id]);
+         $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
+      ?>
+      <img style="display: block; margin-left: auto; margin-right: auto; width: 100px; height: 100px; border-radius: 50%; margin-top: 10px;" src="../uploaded_img/<?= $fetch_profile['image']; ?>" alt="Rider's Profile Picture">
+      <p><?= $fetch_profile['name']; ?></p>
+      <a href="rider_update.php" class="btn">Update Profile</a>
+      <a href="../components/rider_logout.php" class="delete-btn">Logout</a>
+   </div>
+
 
    </section>
 
