@@ -16,7 +16,7 @@ $rider = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $rider_name = $rider['name'];
 
-$stmt = $conn->prepare("SELECT id, name, number, email, address, total_products, total_price, payment_status, user_id, placed_on, riders FROM orders WHERE method = 'CASH ON DELIVERY' AND payment_status = 'Paid' AND riders IN (SELECT name FROM riders WHERE id = ?) ORDER BY placed_on DESC LIMIT 1");
+$stmt = $conn->prepare("SELECT id, name, number, email, address, method, total_products, total_price, payment_status, user_id, placed_on, riders FROM orders WHERE method = 'CASH ON DELIVERY' AND payment_status = 'Paid' AND riders IN (SELECT name FROM riders WHERE id = ?) ORDER BY placed_on DESC LIMIT 1");
 $stmt->execute([$riders_id]);
 $order = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
@@ -89,6 +89,7 @@ $order = $stmt->fetch(PDO::FETCH_ASSOC);
                 <p style="color: #E0163D;"> Email: <span style="color: black;"><?php echo $order['email']; ?></span></p>
                 <p style="color: #E0163D;"> Number: <span style="color: black;"><?php echo $order['number']; ?></span></p>
                 <p style="color: #E0163D;"> Address: <span style="color: black;"><?php echo $order['address']; ?></span></p>
+                <p style="color: #E0163D;"> Payment Method: <span style="color: green;"><?php echo $order['method']; ?></span></p>
                 <p style="color: #E0163D;"> Food ordered: <span style="color: black;"><?php echo $order['total_products']; ?></span></p>
                 <p style="color: #E0163D;"> Total price: <span style="color: black;">₱<?php echo $order['total_price']; ?></span></p>
                 <p style="color: #E0163D;"> Delivery Rider: <span style="color: orange; text-decoration: underline; text-transform: uppercase;"><?php echo $rider_name; ?></span></p>

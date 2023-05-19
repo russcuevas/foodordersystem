@@ -60,7 +60,7 @@ if (isset($_SESSION['user_id'])) {
                         <p>Email: <span><?= $fetch_orders['email']; ?></span></p>
                         <p>Number: <span><?= $fetch_orders['number']; ?></span></p>
                         <p>Address: <span><?= $fetch_orders['address']; ?></span></p>
-                        <p>Payment Method: <span><?= $fetch_orders['method']; ?></span></p>
+                        <p>Payment Method: <span style="color: orange; text-decoration: underline;"><?= $fetch_orders['method']; ?></span></p>
                         <p>Your orders: <span><?= $fetch_orders['total_products']; ?></span></p>
                         <p>Total price: <span>₱<?= $total_price; ?></span></p>
                         <p>Delivery Rider : <span style="color: orange; text-decoration: underline;"><?= $fetch_orders['riders'] ?> </span></p>

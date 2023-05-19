@@ -17,7 +17,7 @@ $rider = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $rider_name = $rider['name'];
 
-$stmt = $conn->prepare("SELECT id, name, number, email, address, total_products, total_price, payment_status, user_id, placed_on, riders FROM orders WHERE method = 'CASH ON DELIVERY' AND riders IN (SELECT name FROM riders WHERE id = ?)");
+$stmt = $conn->prepare("SELECT id, name, number, email, address, method, total_products, total_price, payment_status, user_id, placed_on, riders FROM orders WHERE method = 'CASH ON DELIVERY' AND riders IN (SELECT name FROM riders WHERE id = ?)");
 $stmt->execute([$riders_id]);
 $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -84,6 +84,7 @@ if (isset($_POST['update_payment'])) {
                <p> Email: <span><?php echo $order['email']; ?></span> </p>
                <p> Number: <span><?php echo $order['number']; ?></span> </p>
                <p> Address: <span><?php echo $order['address']; ?></span> </p>
+               <p> Payment Method: <span><?php echo $order['method']; ?></span></p>
                <p> Food ordered: <span><?php echo $order['total_products']; ?></span> </p>
                <p> Total price: <span>₱<?php echo $order['total_price']; ?></span> </p>
                <form action="" method="POST">
