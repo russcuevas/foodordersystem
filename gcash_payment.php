@@ -2,8 +2,11 @@
 session_start();
 require_once 'components/connect.php';
 
+// Set timezone to Asia/Manila
+date_default_timezone_set('Asia/Manila');
+
 // SESSION CHECK IF USER IS LOGIN
-if(!isset($_SESSION['user_id'])){
+if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();
 }
@@ -11,7 +14,7 @@ if(!isset($_SESSION['user_id'])){
 // CHECK IF CART IS EMPTY CANT REDIRECT TO GCASH_PAYMENT.PHP
 $select_cart = $conn->prepare("SELECT * FROM `cart` WHERE user_id = ?");
 $select_cart->execute([$_SESSION['user_id']]);
-if($select_cart->rowCount() == 0){
+if ($select_cart->rowCount() == 0) {
     header('Location: checkout.php');
     exit();
 }
@@ -27,9 +30,9 @@ $grand_total = 0;
 $cart_items = [];
 $select_cart = $conn->prepare("SELECT * FROM `cart` WHERE user_id = ?");
 $select_cart->execute([$user_id]);
-if($select_cart->rowCount() > 0){
-    while($fetch_cart = $select_cart->fetch(PDO::FETCH_ASSOC)){
-        $cart_items[] = $fetch_cart['name'].' ('.$fetch_cart['price'].' x '. $fetch_cart['quantity'].')';
+if ($select_cart->rowCount() > 0) {
+    while ($fetch_cart = $select_cart->fetch(PDO::FETCH_ASSOC)) {
+        $cart_items[] = $fetch_cart['name'] . ' (' . $fetch_cart['price'] . ' x ' . $fetch_cart['quantity'] . ')';
         $grand_total += ($fetch_cart['price'] * $fetch_cart['quantity']);
     }
 }
@@ -44,7 +47,7 @@ $method = 'GCASH';
 $payment_status = 'Pending';
 
 // INSERTING DATA TO DATABASE
-if(isset($_POST['submit'])){
+if (isset($_POST['submit'])) {
     $gcash_name = $_POST['gcash_name'];
     $gcash_num = $_POST['gcash_num'];
     $gcash_amount = $_POST['gcash_amount'];
@@ -52,35 +55,36 @@ if(isset($_POST['submit'])){
     $errors = [];
 
     // Errors;
-    if(empty($gcash_name)){
+    if (empty($gcash_name)) {
         $errors[] = 'GCASH Name is required.';
     }
 
-    if(empty($gcash_num)){
+    if (empty($gcash_num)) {
         $errors[] = 'GCASH Number is required.';
     }
 
-    if(empty($gcash_amount)){
+    if (empty($gcash_amount)) {
         $errors[] = 'Payment Amount is required.';
-    }elseif($gcash_amount < $grand_total){
+    } elseif ($gcash_amount < $grand_total) {
         $errors[] = 'Payment Amount must be greater than or equal to the Total Price!';
     }
 
-    // If no error
-    if(empty($errors)){
-        // Generate random numbers
+    // IF NO ERROR
+    if (empty($errors)) {
         $reference_number = uniqid();
-        $insert_order = $conn->prepare("INSERT INTO `orders` (user_id, total_products, total_price, name, number, email, address, method, gcash_name, gcash_num, gcash_amount, payment_status, change_amount, reference_number) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $change_amount = $gcash_amount - $grand_total;
-        $insert_order->execute([$user_id, $total_products, $grand_total, $name, $gcash_num, $email, $address, $method, $gcash_name, $gcash_num, $gcash_amount, $payment_status, $change_amount, $reference_number]);
+        $insert_order = $conn->prepare("INSERT INTO `orders` (user_id, total_products, total_price, name, number, email, address, method, gcash_name, gcash_num, gcash_amount, payment_status, change_amount, reference_number, placed_on) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-        // Automatic update if i submit
-        $order_id = $conn->lastInsertId(); // Get the ID of the inserted order
+        $currentDateTime = new DateTime();
+        $formattedDateTime = $currentDateTime->format('Y-m-d g:i:sA');
+
+        $change_amount = $gcash_amount - $grand_total;
+        $insert_order->execute([$user_id, $total_products, $grand_total, $name, $gcash_num, $email, $address, $method, $gcash_name, $gcash_num, $gcash_amount, $payment_status, $change_amount, $reference_number, $formattedDateTime]);
+
+        $order_id = $conn->lastInsertId();
         $update_payment_status = $conn->prepare("UPDATE `orders` SET payment_status = 'Paid' WHERE id = ?");
         $update_payment_status->execute([$order_id]);
 
-        // Automatic delete cart if i submit
         $delete_cart = $conn->prepare("DELETE FROM `cart` WHERE user_id = ?");
         $delete_cart->execute([$user_id]);
 

@@ -180,51 +180,37 @@ section {
     color: #231F20;
 }
 
-/* PAGINATION */
-.pagination-container {
-    margin-top: 20px;
+/* CATEGORY */
+
+.category .box-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(216px, 1fr));
+    gap: 12px;
+    align-items: flex-start;
 }
 
-.pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+.category .box-container .box {
+  background-color: white;
+  border-radius: 20px;
+  border: 2px solid #231F20;
+  box-shadow: 0 0 0 2px rgba(224, 22, 61, 0.2),
+              0 0 0 4px rgba(224, 22, 61, 0.1),
+              0 0 20px rgba(224, 22, 61, 0.1);
+  padding: 16px;
+  text-align: center;
 }
 
-.pagination li {
-    margin: 0;
-    padding: 0;
-    border: 1px solid #dee2e6;
-    font-size: 16px;
-}
+.category .box-container .box h2 {
+  font-size: 16px;
+  margin-top: 12px;
+  color: black;
+  text-transform: capitalize;
+} 
 
-.pagination li.active {
-    background-color: #E0163D;
-    color: #fff;
-    border: 1px solid #E0163D;
-    width: 50px;
-    height: 40px;
-    padding: 10px;
-    text-align: center;
-}
-
-.pagination li a {
-    display: block;
-    padding: 10px 12px;
-    text-decoration: none;
-    width: 50px;
-    height: 40px;
-    padding: 10px;
-    text-align: center;
-    color: #222;
-}
-
-.pagination li a:hover {
-    background-color: #e9ecef;
-    color: #E0163D;
+.category .box-container .box img {
+    width: 100%;
+    height: 80px;
+    object-fit: contain;
 }
 
 /* KAPAG WALANG LAMAN LAHAT ANG EXAMPLE USERS / ADMINS / PRODUCTS */
@@ -450,7 +436,7 @@ section {
 
 /* SHOW / VIEW PRODUCTS */
 
-.show-products .box-container {
+.show-products .box-container2 {
     display: grid;
     grid-template-columns: repeat(auto-fit, 324px);
     gap: 14px;
@@ -458,7 +444,7 @@ section {
     align-items: flex-start;
 }
 
-.show-products .box-container .box {
+.show-products .box-container2 .box {
     background-color: #fff;
     border-radius: 4px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
@@ -466,40 +452,40 @@ section {
     padding: 20px;
 }
 
-.show-products .box-container .box img {
+.show-products .box-container2 .box img {
     width: 100%;
     height: 160px;
     object-fit: contain;
     margin-bottom: 1px;
 }
 
-.show-products .box-container .box .name {
+.show-products .box-container2 .box .name {
     font-size: 16px;
     font-weight: 900;
     color: #231F20;
     padding: 1px 0;
 }
 
-.show-products .box-container .box .flex {
+.show-products .box-container2 .box .flex {
     display: flex;
     align-items: center;
     gap: 1px;
     justify-content: space-between;
 }
 
-.show-products .box-container .box .flex .category {
+.show-products .box-container2 .box .flex .category {
     font-size: 16px;
     font-weight: 900;
     color: #E0163D;
 }
 
-.show-products .box-container .box .flex .price {
+.show-products .box-container2 .box .flex .price {
     font-size: 20px;
     color: #231F20;
     margin: 4px 0;
 }
 
-.show-products .box-container .box .flex .price span {
+.show-products .box-container2 .box .flex .price span {
     font-size: 14px;
 }
 

@@ -116,7 +116,7 @@ if(isset($_GET['delete'])){
 
 <section class="show-products" style="padding-top: 0;">
     <h1 style="text-align:center; font-size: 35px; margin-bottom: 20px;">Our Riders : </h1>
-   <div class="box-container">
+   <div class="box-container2">
     <?php
          $select_riders = $conn->prepare("SELECT * FROM `riders`");
          $select_riders->execute();

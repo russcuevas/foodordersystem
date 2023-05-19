@@ -19,38 +19,41 @@ $stmt->execute();
 $riders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // CHECKOUT QUERY
-if(isset($_POST['submit'])){
-    $name = $_POST['name'];
-    $number = $_POST['number'];
-    $email = $_POST['email'];
-    $method = $_POST['method'];
-    $address = $_POST['address'];
-    $riders = $_POST['riders'];
-    $total_products = $_POST['total_products'];
-    $total_price = $_POST['total_price'];
+if (isset($_POST['submit'])) {
+   $name = $_POST['name'];
+   $number = $_POST['number'];
+   $email = $_POST['email'];
+   $method = $_POST['method'];
+   $address = $_POST['address'];
+   $riders = $_POST['riders'];
+   $total_products = $_POST['total_products'];
+   $total_price = $_POST['total_price'];
 
-    $check_cart = $conn->prepare("SELECT * FROM `cart` WHERE user_id = ?");
-    $check_cart->execute([$user_id]);
+   $check_cart = $conn->prepare("SELECT * FROM `cart` WHERE user_id = ?");
+   $check_cart->execute([$user_id]);
 
-    if($check_cart->rowCount() > 0){
+   if ($check_cart->rowCount() > 0) {
+       if ($address == '') {
+           $message[] = '• Please add your address';
+       } else {
+           date_default_timezone_set('Asia/Manila');
 
-       if($address == ''){
-          $message[] = '• Please add your address';
-       }else{
+           $currentDateTime = new DateTime();
+           $formattedDateTime = $currentDateTime->format('Y-m-d g:i:sA');
 
-          $insert_order = $conn->prepare("INSERT INTO `orders`(user_id, name, number, email, method, address, riders, total_products, total_price) VALUES(?, ?,?,?,?,?,?,?,?)");
-          $insert_order->execute([$user_id, $name, $number, $email, $method, $address, $riders, $total_products, $total_price]);
+           $insert_order = $conn->prepare("INSERT INTO `orders`(user_id, name, number, email, method, address, riders, total_products, total_price, placed_on) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+           $insert_order->execute([$user_id, $name, $number, $email, $method, $address, $riders, $total_products, $total_price, $formattedDateTime]);
 
-          $delete_cart = $conn->prepare("DELETE FROM `cart` WHERE user_id = ?");
-          $delete_cart->execute([$user_id]);
+           $delete_cart = $conn->prepare("DELETE FROM `cart` WHERE user_id = ?");
+           $delete_cart->execute([$user_id]);
 
-          header ('location: orders.php');
+           header('location: orders.php');
        }
-
-    }else{
+   } else {
        $message[] = '• Your Cart is Empty';
-    }
+   }
 }
+
 
 ?>
 

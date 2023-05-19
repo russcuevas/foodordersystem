@@ -109,6 +109,22 @@ if(isset($_GET['delete'])){
 <!-- ADD PRODUCT END -->
 
 
+<section style="margin-top: 50px;" class="category">
+   <h1 style="text-align: center; font-size: 32px; margin-bottom: 10px;"class="title">SEARCH BY FOOD CATEGORY</h1>
+   <div class="box-container">
+
+   <h2 class="box" style="color: black;"><img src="../images/cat-1.png" alt="">Fast Food</h2>
+
+   <h2 class="box" style="color: black;"><img src="../images/cat-2.png" alt="">Main Dish</h2>
+
+   <h2 class="box" style="color: black;"><img src="../images/cat-3.png" alt="">Drinks</h2>
+
+   <h2 class="box" style="color: black;"><img src="../images/cat-4.png" alt="">Desserts</h2>
+
+
+   </div>
+</section>
+
 <!-- SEARCH START -->
 <section class="search-section">
    <form action="" method="get" class="search-form">
@@ -119,7 +135,7 @@ if(isset($_GET['delete'])){
 
 
 <section class="show-products" style="padding-top: 0;">
-   <div class="box-container">
+   <div class="box-container2">
       <?php
          // check if search query is set
          if (isset($_GET['search'])) {
@@ -167,7 +183,7 @@ if(isset($_GET['delete'])){
 <!-- CUSTOM ADMIN JS -->
 <script>
    const searchInput = document.getElementById('searchInput');
-   const boxContainer = document.querySelector('.box-container');
+   const boxContainer = document.querySelector('.box-container2');
    const emptyMessage = document.querySelector('.empty');
 
    searchInput.addEventListener('input', searchProducts);

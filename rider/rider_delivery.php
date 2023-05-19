@@ -12,7 +12,7 @@ $client = new Client($sid, $token);
 session_start();
 $riders_id = $_SESSION['riders_id'];
 if (!isset($riders_id)) {
-    header('location:riders_login.php');
+    header('location:rider_login.php');
     exit; // Stop further execution
 }
 
