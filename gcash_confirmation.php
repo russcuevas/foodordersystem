@@ -23,6 +23,8 @@ if (isset($_SESSION['user_id'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GCASH Confirmation</title>
+    <!-- FAVICON -->
+    <link rel="shortcut icon" href="favicon/gcash.svg" type="image/x-icon">
     <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- FONT AWESOME -->
@@ -70,6 +72,7 @@ if (isset($_SESSION['user_id'])) {
                 <p style="color: black;">GCASH Name : <span style="color: red; font-weight: 800;"><?= $maskedName ?></span></p>
                 <p style="color: black;">GCASH Number : <span style="color: red; font-weight: 800;"><?= $fetch_order['gcash_num'] ?></span></p>
                 <p style="color: black;">PHP : <span style="color: red; font-weight: 800;">₱<?= $gcash_amount ?></span></p>
+                <p style="color: black;">Your change : <span style="color: red; font-weight: 800">₱<?= $change_amount ?></span></p>
                 <p style="color: black;">Date : <span style="color: red; font-weight: 800;"><?= $fetch_order['placed_on'] ?></span></p>
                 <a href="gcashorders.php" class="btn btn-primary">Check your orders</a>
                 <div class="">

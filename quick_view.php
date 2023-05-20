@@ -27,7 +27,7 @@ include 'components/add_cart.php';
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>View Food</title>
    <!-- LINK IN FAVICON -->
-   <link rel="shortcut icon" href="favicon/icon.svg" type="image/x-icon">
+   <link rel="shortcut icon" href="favicon/user.png" type="image/x-icon">
    <!-- SWIPER LINK -->
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
    <!-- FONT AWESOME LINK -->

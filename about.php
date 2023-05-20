@@ -25,7 +25,7 @@ if(isset($_SESSION['user_id'])){
    <link rel="icon" type="image/png" href="icon.svg">
    <title>About | Page</title>
    <!-- LINK IN FAVICON -->
-   <link rel="shortcut icon" href="favicon/icon.svg" type="image/x-icon">
+   <link rel="shortcut icon" href="favicon/user.png" type="image/x-icon">
     <!-- SWIPER LINK -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     <!-- FONT AWESOME LINK -->

@@ -104,9 +104,13 @@ if (isset($_POST['submit'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initialization-scale=1.0">
-<title>GCASH Payment</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<link rel="stylesheet" href="css/gcash.css">
+    <title>GCASH Payment</title>
+    <!-- FAVICON -->
+    <link rel="shortcut icon" href="favicon/gcash.svg" type="image/x-icon">
+    <!-- BOOTSTRAP LINK -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- STYLE CSS -->
+    <link rel="stylesheet" href="css/gcash.css">
 </head>
 <body>
 	<header>
@@ -142,7 +146,7 @@ if (isset($_POST['submit'])) {
                 oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 6); if (parseInt(this.value) > 100000) { this.value = '100000'; }" 
                 maxlength="6" placeholder="Please enter your payment here.."><br>
                 
-                <p class="bg-danger" style="color: white; font-style: bold; font-size: 30px;">TO PAY: <span>₱<?php echo $grand_total; ?></span></p>
+                <p class="bg-danger" style="color: white; font-style: bold; font-size: 30px; text-align: center;">TO PAY: <span>₱<?php echo $grand_total; ?></span></p>
                     <input type="submit" name="submit" value="SUBMIT PAYMENT">
                 <div>
                 <a href="checkout.php" class="btn btn-danger p-2 mt-2 text-white">GO BACK</a>
