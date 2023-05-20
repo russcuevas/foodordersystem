@@ -1,6 +1,17 @@
 <?php
+// INCLUDING CONNECTION TO DATABASE
 include 'components/connect.php';
+// SESSIONS
 session_start();
+
+if(isset($_SESSION['user_id'])){
+    $user_id = $_SESSION['user_id'];
+    header('location:home.php');
+ }else{
+    $user_id = '';
+ };
+
+//  QUERY SELECTING THE USER TO FORGOT
 
 $message = '';
 
@@ -45,7 +56,7 @@ if (isset($_POST['submit'])) {
 }
 ?>
 
-
+<!-- FORGOT PASSWORD PAGE -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,6 +69,7 @@ if (isset($_POST['submit'])) {
     <title>Forgot Password</title>
 </head>
 <body>
+<!-- FORGOT PASSWORD STARTS -->
 <section class="forgot-password">
    <form action="" method="POST">
       <h3>Forgot Password</h3>
@@ -68,9 +80,28 @@ if (isset($_POST['submit'])) {
         <input type="submit" value="Reset Password" name="submit" class="btn">
     </form>
 </section>
+<!-- FORGOT PASSWORD ENDS -->
+
+<!-- FOR LOADING -->
+<div class="loading">
+    <img src="images/email.gif" alt="">
+</div>
+<!-- END LOADING -->
 
 <!-- CUSTOM JS LINK -->
 <script src="js/script.js"></script>
+<script>
+    // FOR LOADING PAGE
+    function loading() {
+    document.querySelector('.loading').style.display = 'none';
+    }
+
+    function fadeOut() {
+    setInterval(loading, 1000);
+    }
+
+    window.onload = fadeOut;
+</script>
 
 </body>
 </html>
