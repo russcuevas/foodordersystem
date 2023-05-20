@@ -10,7 +10,7 @@ if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 } else {
     $user_id = '';
-    echo "<link rel='shortcut icon' href='favicon/user.png' type='image/x-icon'>
+    echo "<link rel='shortcut icon' href='favicon/question.png' type='image/x-icon'>
     <div style='background-color: #f8d7da; color: #721c24; padding: 20px; font-size:25px; text-align:center; text-transform: uppercase;'> <a style='text-decoration: underline;' href='login.php'>Login </a> first to see your COD receipt!</div>";
 };
 
@@ -25,7 +25,7 @@ if (isset($_SESSION['user_id'])) {
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Customer Receipt</title>
    <!-- LINK IN FAVICON -->
-   <link rel="shortcut icon" href="favicon/user.png" type="image/x-icon">
+   <link rel="shortcut icon" href="favicon/receipt.png" type="image/x-icon">
    <!-- FONT AWESOME LINK -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
