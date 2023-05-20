@@ -10,13 +10,9 @@ session_start();
 if (isset($_SESSION['user_id'])) {
    $user_id = $_SESSION['user_id'];
 
-   // Retrieve user information from the database using the $user_id
-   // Example code: 
    $select_user = $conn->prepare("SELECT name, email, number FROM `users` WHERE id = ?");
    $select_user->execute([$user_id]);
    
-
-   // Check if the user exists
    if ($select_user->rowCount() > 0) {
       $user = $select_user->fetch();
       $name = $user['name'];
@@ -63,13 +59,14 @@ if(isset($_POST['send'])){
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Contact | Page</title>
-
-    <!-- SWIPER LINK -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
-    <!-- FONT AWESOME LINK -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <!-- LINK IN FAVICON -->
+   <link rel="shortcut icon" href="favicon/icon.svg" type="image/x-icon">
+   <!-- SWIPER LINK -->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+   <!-- FONT AWESOME LINK -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+   integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+   crossorigin="anonymous" referrerpolicy="no-referrer" />
    <!-- CSS LINK  -->
    <link rel="stylesheet" href="css/style.css">
 

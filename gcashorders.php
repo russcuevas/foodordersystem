@@ -12,7 +12,8 @@ if (isset($_SESSION['user_id'])) {
 // ELSE IT WILL SHOW
 } else {
     $user_id = '';
-    echo "<div style='background-color: #f8d7da; color: #721c24; padding: 20px; font-size:25px; text-align:center; text-transform: uppercase;'> <a style='!important; text-decoration: underline;' href='login.php'>Login </a> first to see your GCASH receipt!</div>";
+    echo "<link rel='shortcut icon' href='favicon/icon.svg' type='image/x-icon'>
+    <div style='background-color: #f8d7da; color: #721c24; padding: 20px; font-size:25px; text-align:center; text-transform: uppercase;'> <a style='!important; text-decoration: underline;' href='login.php'>Login </a> first to see your GCASH receipt!</div>";
 };
 
 ?>
