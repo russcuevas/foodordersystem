@@ -79,7 +79,9 @@ if (isset($_POST['submit'])) {
         <input type="email" name="email" required placeholder="Enter your email" class="box" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
         <input type="submit" value="Reset Password" name="submit" class="btn">
     </form>
+    <a href="login.php" style="display: inline-block; margin-top: 10px;">Go back</a>
 </section>
+
 <!-- FORGOT PASSWORD ENDS -->
 
 <!-- FOR LOADING -->

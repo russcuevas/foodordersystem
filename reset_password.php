@@ -67,5 +67,27 @@ if (isset($_GET['key'])) {
          </form>
       <?php } ?>
    </div>
+
+<!-- FOR LOADING -->
+<div class="loading">
+    <img src="images/email.gif" alt="">
+</div>
+<!-- END LOADING -->
+
+<!-- CUSTOM JS LINK -->
+<script src="js/script.js"></script>
+<script>
+    // FOR LOADING PAGE
+    function loading() {
+    document.querySelector('.loading').style.display = 'none';
+    }
+
+    function fadeOut() {
+    setInterval(loading, 1000);
+    }
+
+    window.onload = fadeOut;
+</script>
+
 </body>
 </html>
