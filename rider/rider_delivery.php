@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'body' => $messageContent
             ]
         );
-        echo 'Message sent successfully! SID: ' . $message->sid;
+        echo 'Message sent successfully! ID: ' . $message->sid;
     } else {
         echo 'Invalid order selected.';
     }
@@ -64,6 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rider Delivery</title>
+    <link rel="shortcut icon" href="../favicon/rider/delivery.png" type="image/x-icon">
 </head>
 <body>
     <form action="" method="POST">
