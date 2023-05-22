@@ -72,6 +72,28 @@ if(!isset($admin_id)){
 
    <div class="box">
       <?php
+         $select_users = $conn->prepare("SELECT * FROM `users`");
+         $select_users->execute();
+         $numbers_of_users = $select_users->rowCount();
+      ?>
+      <h3><?= $numbers_of_users; ?></h3>
+      <p>COD Orders</p>
+      <a href="users_accounts.php" class="btn">View Users</a>
+   </div>
+
+   <div class="box">
+      <?php
+         $select_users = $conn->prepare("SELECT * FROM `users`");
+         $select_users->execute();
+         $numbers_of_users = $select_users->rowCount();
+      ?>
+      <h3><?= $numbers_of_users; ?></h3>
+      <p>GCASH Orders</p>
+      <a href="users_accounts.php" class="btn">View Users</a>
+   </div>
+
+   <div class="box">
+      <?php
          $select_products = $conn->prepare("SELECT * FROM `products`");
          $select_products->execute();
          $numbers_of_products = $select_products->rowCount();
