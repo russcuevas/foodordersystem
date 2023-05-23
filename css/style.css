@@ -21,6 +21,10 @@
     transition: 0.6s;
 }
 
+.dark .header{
+    border-bottom: 4px solid #dee2e6;
+}
+
 .dark .home .slide .content h3 {
     color: #E0E1E4;
 }
