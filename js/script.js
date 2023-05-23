@@ -30,25 +30,34 @@ document.querySelectorAll('input[type="number"]').forEach(numberInput => {
    };
 });
 
-
-// DARK MODE JAVASCRIPT
-const darkModePreference = localStorage.getItem('darkMode');
-
-// Apply dark mode if the preference is set to 'true'
-if (darkModePreference === 'true') {
-  document.body.classList.add('dark');
-}
-
+// DARK MODE
 let toggle = document.getElementById('toggle');
+let isDarkMode = localStorage.getItem('darkMode') === 'true';
 
-toggle.addEventListener('click', () => {
+function toggleDarkMode() {
   console.log('Toggle button clicked');
   document.body.classList.toggle('dark');
+  isDarkMode = !isDarkMode;
 
-  // Save the dark mode preference to local storage
-  const isDarkMode = document.body.classList.contains('dark');
+  if (isDarkMode) {
+    toggle.classList.remove('fa-sun');
+    toggle.classList.add('fa-moon');
+  } else {
+    toggle.classList.remove('fa-moon');
+    toggle.classList.add('fa-sun');
+  }
+
   localStorage.setItem('darkMode', isDarkMode);
-});
+}
+
+if (isDarkMode) {
+  document.body.classList.add('dark');
+  toggle.classList.remove('fa-sun');
+  toggle.classList.add('fa-moon');
+}
+
+toggle.addEventListener('click', toggleDarkMode);
+
 
  
  

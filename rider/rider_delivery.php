@@ -4,8 +4,8 @@ include '../components/connect.php';
 require __DIR__ . '/../vendor/autoload.php';
 use Twilio\Rest\Client;
 
-$sid = "AC1b234dbe251c725f4e03ce448dee6e65";
-$token = "e1b33d4d5a9db5dfe97025d4ca9ae3bc";
+$sid = "ACa67a4f0761818fd58de5b4ededbdb0ef";
+$token = "bb2ebbac96507d0b2836e3a41aad7206";
 $client = new Client($sid, $token);
 
 // SESSION IF NOT LOGIN YOU CAN'T GO TO DIRECT PAGE
@@ -13,10 +13,9 @@ session_start();
 $riders_id = $_SESSION['riders_id'];
 if (!isset($riders_id)) {
     header('location:rider_login.php');
-    exit; // Stop further execution
+    exit;
 }
 
-// Get the rider's name based on the ID
 $stmt = $conn->prepare("SELECT name FROM riders WHERE id = ?");
 $stmt->execute([$riders_id]);
 $rider = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -45,13 +44,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $message = $client->messages->create(
             $formattedPhoneNumber,
             [
-                'from' => '+12525168668',
+                'from' => '+12542564687',
                 'body' => $messageContent
             ]
         );
-        echo 'Message sent successfully! ID: ' . $message->sid;
+        $success = 'Message sent successfully! ID: ' . $message->sid;
     } else {
-        echo 'Invalid order selected.';
+        $error = 'Invalid order selected.';
     }
 }
 
@@ -65,19 +64,91 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rider Delivery</title>
     <link rel="shortcut icon" href="../favicon/rider/delivery.png" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .message {
+            background-color: #f1f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .message p {
+            margin: 0;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        select, textarea, input[type="submit"] {
+            width: 95%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #E0163D;
+            color: white;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #c91437;
+        }
+    </style>
 </head>
 <body>
-    <form action="" method="POST">
-        <h1>Rider Dashboard</h1>
-        <label for="name">Receiver</label>
-        <select name="name" id="name">
-            <?php foreach ($orders as $order) : ?>
-                <option value="<?php echo $order['id']; ?>"><?php echo $order['name']; ?></option>
-            <?php endforeach; ?>
-        </select><br>
-        <label for="message">Message:</label><br>
-        <textarea name="message" id="message" cols="30" rows="10"></textarea><br>
-        <input type="submit" name="submit" value="Send">
-    </form>
+    <div class="container">
+        <h1>Rider Text Message</h1>
+        <div class="message">
+            <?php if (!empty($success)) : ?>
+                <p>Sender : <span style="color: red;"><?php echo $rider_name; ?></span></p>
+            <?php endif; ?>
+        </div>
+        <form action="" method="POST">
+            <label for="name">Receiver:</label>
+            <select name="name" id="name" required>
+                <?php foreach ($orders as $order) : ?>
+                    <option value="<?php echo $order['id']; ?>"><?php echo $order['name']; ?></option>
+                <?php endforeach; ?>
+            </select>
+            <label for="message">Message:</label>
+            <textarea name="message" id="message" cols="30" rows="10"></textarea>
+            <input type="submit" name="submit" value="Send">
+            <a href="rider_dashboard.php" style="text-decoration: none;">Go Back</a>
+        </form>
+        <?php if (!empty($success)) : ?>
+            <p style="color: green;"><?php echo $success; ?></p>
+        <?php endif; ?>
+        <?php if (!empty($error)) : ?>
+            <p style="color: red;"><?php echo $error; ?></p>
+        <?php endif; ?>
+    </div>
 </body>
 </html>
+

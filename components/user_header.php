@@ -76,7 +76,7 @@ if (isset($message)) {
         </nav>
 
         <div class="icons">
-            <i class="fa-solid fa-circle-half-stroke" id="toggle"></i>
+            <i class="fa-solid fa-sun" id="toggle"></i>
             <?php
             $count_cart_items = $conn->prepare("SELECT * FROM `cart` WHERE user_id = ?");
             $count_cart_items->execute([$user_id]);
@@ -154,4 +154,6 @@ if ($select_profile->rowCount() > 0) {
             }
         });
     });
+
+    
 </script>

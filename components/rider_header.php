@@ -22,7 +22,7 @@ if(isset($message)){
 
       <nav class="navbar">
          <a href="rider_dashboard.php">Home</a>
-         <a href="rider_delivery.php">Delivery Message</a>
+         <a href="rider_delivery.php">Text Message</a>
          <a href="rider_pendingorders.php">Pending Orders</a>
          <a href="rider_paidorders.php">Paid Orders</a>
          <!-- <a href="users_accounts.php">Users</a>

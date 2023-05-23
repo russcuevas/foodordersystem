@@ -3,11 +3,18 @@ include '../components/connect.php';
 
 session_start();
 $riders_id = $_SESSION['riders_id'];
-if(!isset($riders_id)){
+if (!isset($riders_id)) {
     header('location:rider_login.php');
+    exit;
 }
 
+$select_rider = $conn->prepare("SELECT name FROM riders WHERE id = :riders_id");
+$select_rider->bindParam(':riders_id', $riders_id);
+$select_rider->execute();
+$fetch_profile = $select_rider->fetch(PDO::FETCH_ASSOC);
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,26 +35,27 @@ if(!isset($riders_id)){
 <?php include '../components/rider_header.php' ?>
 <!-- ENDS -->
     
-    <!-- RIDER DASHBOARD START -->
+<!-- RIDER DASHBOARD START -->
 <section class="dashboard">
     <h1 class="heading">Rider Dashboard</h1>
     <div class="box-container">
-    <div class="box">
-      <h3>Welcome!</h3>
-      <p><?= $fetch_profile['name']; ?></p>
-      <a href="rider_update.php" class="btn">Update Profile</a>
-   </div>
+        <div class="box">
+            <h3>Welcome!</h3>
+            <p><?= $fetch_profile['name']; ?></p>
+            <a href="rider_update.php" class="btn">Update Profile</a>
+        </div>
 
-   <div class="box">
-    <?php 
-    $select_orders = $conn->prepare("SELECT * FROM orders WHERE payment_status = 'Pending'");
-    $select_orders->execute();
-    $select_pending = $select_orders->rowCount();
-    ?>
-    <h3>Pending Orders</h3>
-    <p><?= $select_pending; ?></p>
-    <a href="rider_pendingorders.php" class="btn">View Pending Orders</a>
-   </div>
+        <div class="box">
+            <?php 
+            $select_orders = $conn->prepare("SELECT * FROM orders WHERE payment_status = 'Pending' AND riders = '{$fetch_profile['name']}'");
+            $select_orders->execute();
+            $select_pending = $select_orders->rowCount();
+            ?>
+            <h3>Pending Orders</h3>
+            <p><?= $select_pending; ?></p>
+            <a href="rider_pendingorders.php" class="btn">View Pending Orders</a>
+        </div>
+    </div>
 </section>
     
 </body>
