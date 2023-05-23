@@ -30,6 +30,29 @@ document.querySelectorAll('input[type="number"]').forEach(numberInput => {
    };
 });
 
+
+// DARK MODE JAVASCRIPT
+const darkModePreference = localStorage.getItem('darkMode');
+
+// Apply dark mode if the preference is set to 'true'
+if (darkModePreference === 'true') {
+  document.body.classList.add('dark');
+}
+
+let toggle = document.getElementById('toggle');
+
+toggle.addEventListener('click', () => {
+  console.log('Toggle button clicked');
+  document.body.classList.toggle('dark');
+
+  // Save the dark mode preference to local storage
+  const isDarkMode = document.body.classList.contains('dark');
+  localStorage.setItem('darkMode', isDarkMode);
+});
+
+ 
+ 
+
 // FOR LOADING PAGE
 function loading() {
    document.querySelector('.loading').style.display = 'none';
