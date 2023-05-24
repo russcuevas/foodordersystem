@@ -1,5 +1,6 @@
 {
     "require": {
-        "twilio/sdk": "^7.3"
+        "twilio/sdk": "^7.3",
+        "phpmailer/phpmailer": "^6.8"
     }
 }

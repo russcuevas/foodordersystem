@@ -4,56 +4,156 @@ include 'components/connect.php';
 // SESSIONS
 session_start();
 
+// Include PHPMailer autoloader from vendor directory
+require 'vendor/autoload.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
 if(isset($_SESSION['user_id'])){
     $user_id = $_SESSION['user_id'];
     header('location:home.php');
- }else{
+} else {
     $user_id = '';
- };
+}
 
-//  QUERY SELECTING THE USER TO FORGOT
-
-$message = '';
-
-if (isset($_POST['submit'])) {
+// FORGOT PASSWORD PAGE
+if(isset($_POST['submit'])){
     $email = $_POST['email'];
 
-    $select_user = $conn->prepare("SELECT password, resettoken FROM `users` WHERE email = ?");
-    $select_user->execute([$email]);
-    $row = $select_user->fetch(PDO::FETCH_ASSOC);
+    // Check if the email exists in the database and retrieve the user's details
+    $query = "SELECT * FROM users WHERE email = :email";
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(':email', $email);
+    $stmt->execute();
 
-    if ($select_user->rowCount() > 0) {
+    if ($stmt->rowCount() == 1) {
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $user_id = $user['id'];
+        $fullname = $user['name'];
 
-        $key = bin2hex(random_bytes(16));
-        $password = $row['password'];
+        // Generate a reset token (You can use any method to generate a unique token)
+        $resetToken = bin2hex(random_bytes(32));
 
-        $update_user = $conn->prepare("UPDATE `users` SET password = ?, resettoken = ? WHERE email = ?");
-        $update_user->execute([$password, $key, $email]);
+        // Calculate the expiration time (1 hour from the current time in Asia/Manila timezone)
+        $timezone = new DateTimeZone('Asia/Manila');
+        $currentDateTime = new DateTime('now', $timezone);
+        $expirationTime = $currentDateTime->modify('+30 minutes')->format('Y-m-d H:i:s');
+
+        // Save the reset token and expiration time in the database for the user
+        $updateQuery = "UPDATE users SET resettoken = :resettoken, resetexpires = :resetexpires WHERE id = :id";
+        $stmt = $conn->prepare($updateQuery);
+        $stmt->bindParam(':resettoken', $resetToken);
+        $stmt->bindParam(':resetexpires', $expirationTime);
+        $stmt->bindParam(':id', $user_id);
+        $stmt->execute();
+
+        // Send the password reset email
+        $mail = new PHPMailer(true);
+
+        // Gmail SMTP configuration
+        $mail->isSMTP();
+        $mail->SMTPDebug = 0;  // Set to 2 for debugging information
+        $mail->SMTPAuth = true;
+        $mail->SMTPSecure = 'tls';
+        $mail->Host = 'smtp.gmail.com';
+        $mail->Port = 587;
+        $mail->Username = 'russelarchiefoodorder@gmail.com';
+        $mail->Password = 'shikytxtwosptwao';
+
+        // Sender and recipient settings
+        $mail->setFrom('russelarchiefoodorder@gmail.com', 'FOOD ORDER SYSTEM');
+        $mail->addAddress($email, 'Recipient Name');
+
+        // Email content
+        $mail->Subject = 'Password Reset';
+
+        // HTML version
+        $mail->Body = '
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 0;
+                    padding: 0;
+                }
+                
+                .container {
+                    max-width: 600px;
+                    margin: 0 auto;
+                    padding: 20px;
+                }
+                
+                .header {
+                    background-color: #E0163D;
+                    padding: 10px;
+                    text-align: center;
+                }
+                
+                .content {
+                    padding: 20px;
+                    background-color: #ffffff;
+                }
+                
+                .button {
+                    display: inline-block;
+                    margin-top: 20px;
+                    background-color: #E0163D;
+                    padding: 10px 20px;
+                    text-decoration: none;
+                    border-radius: 4px;
+                }
+    
+                .footer {
+                    margin-top: 20px;
+                    font-size: 12px;
+                    color: #808080;
+                    text-align: center;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1 style="color: white;">Password Reset</h1>
+                </div>
+                <div class="content">
+                    <p>Dear <span style="font-weight: bold;">Mr. ' . $fullname . ',</span></p>
+                    <p>Please click the following link to reset your password:</p>
+                    <p><a class="button" style="color: white;" href="https://localhost/foodordersystem/reset_password.php?key=' . $resetToken . '">Click to reset</a></p>
+                    <p>If the button above does not work, you can copy and paste the following URL into your browser:</p>
+                    <p>https://localhost/foodordersystem/reset_password.php?key=' . $resetToken . '</p>
+                    
+                    <p class="footer" style="text-align: center;">© to Mr. Russel Vincent C. Cuevas &amp; Archie De Vera, developers of the FOOD ORDER SYSTEM<br>
+                    This message was sent to ' . $email . '.<br>
+                    To help keep your account secure, please don\'t forward this email.</p>
+                </div>
+            </div>
+        </body>
+        </html>
+    ';
+    
+    
+    
+
+        // Plain text version
+        $mail->AltBody = 'Dear User, please copy and paste the following URL into your browser to reset your password: https://localhost/foodordersystem/reset_password.php?key=' . $resetToken;
 
 
-        $reset_link = "http://localhost/foodordersystem/reset_password.php?key=" . $key;
-
-        $smtp_host = 'localhost';
-        $smtp_port = 1025;
-
-        $to = $email;
-        $subject = 'Password Reset';
-        $message = 'A password reset link has been sent to your email address. Click the link below to reset your password:' . "\r\n" . $reset_link;
-        $headers = 'From: russarchiefoodorder@gmail.com' . "\r\n" .
-            'X-Mailer: PHP/' . phpversion();
-
-        ini_set('SMTP', $smtp_host);
-        ini_set('smtp_port', $smtp_port);
-
-        if (mail($to, $subject, $message, $headers)) {
-            $message = 'A password reset link has been sent to your email address. <br> <a style="color : red; cursor : pointer; text-decoration: underline;" href="http://localhost:8025/">Click here to check your inbox.</a>';
+        // Send the email
+        if ($mail->send()) {
+            $message = '<p style="color: green;">Password reset instructions have been sent to your email. <a style="color: red; text-decoration: underline;" href="https://accounts.google.com/v3/signin/identifier?dsh=S638507798%3A1684940207096491&continue=https%3A%2F%2Fmail.google.com%2Fmail%2Fu%2F0%2F&emr=1&followup=https%3A%2F%2Fmail.google.com%2Fmail%2Fu%2F0%2F&ifkv=Af_xneG2m22dPmicbTL511Q3gkDlfMt2FuSXQfeubYo3YwUf2vpjHJ8qh8g0Nbupis_rzQZGDdcn&osid=1&passive=1209600&service=mail&flowName=GlifWebSignIn&flowEntry=ServiceLogin" target="_blank">please check here</a>.</p>';
         } else {
-            $message = 'Error while sending a reset link password, please try again.';
+            $message = '<p style="color: red;">Unable to send password reset instructions. Please try again later.</p>';
         }
     } else {
-        $message = 'The email address is not registered.';
+        $message = '<p style="color: red;">Email not found in the database.</p>';
     }
 }
+
 ?>
 
 <!-- FORGOT PASSWORD PAGE -->
@@ -107,4 +207,5 @@ if (isset($_POST['submit'])) {
 
 </body>
 </html>
+
 
