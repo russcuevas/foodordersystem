@@ -20,7 +20,8 @@ if(!isset($admin_id)){
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Admin Dashboard</title>
-
+   <!-- FAVICON LINK -->
+   <link rel="shortcut icon" href="../favicon/rider/dashboard.png" type="image/x-icon">
     <!-- FONT AWESOME LINK -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
@@ -41,7 +42,7 @@ if(!isset($admin_id)){
     <div class="box-container">
     <div class="box">
       <h3>Welcome!</h3>
-      <p><?= $fetch_profile['name']; ?></p>
+      <p style="text-transform: uppercase;"><?= $fetch_profile['name']; ?></p>
       <a href="update_profile.php" class="btn">Update Profile</a>
    </div>
 
@@ -49,7 +50,7 @@ if(!isset($admin_id)){
       <?php
          $total_completes = 0;
          $select_completes = $conn->prepare("SELECT * FROM `orders` WHERE payment_status = ?");
-         $select_completes->execute(['paid']);
+         $select_completes->execute(['Paid']);
          while($fetch_completes = $select_completes->fetch(PDO::FETCH_ASSOC)){
             $total_completes += $fetch_completes['total_price'];
          }
@@ -66,30 +67,30 @@ if(!isset($admin_id)){
          $numbers_of_orders = $select_orders->rowCount();
       ?>
       <h3><?= $numbers_of_orders; ?></h3>
-      <p>Total Orders</p>
+      <p>All Orders</p>
       <a href="placed_orders.php" class="btn">View Orders</a>
    </div>
 
    <div class="box">
-      <?php
-         $select_users = $conn->prepare("SELECT * FROM `users`");
-         $select_users->execute();
-         $numbers_of_users = $select_users->rowCount();
+      <?php 
+         $select_cod = $conn->prepare("SELECT * FROM `orders` WHERE method = 'CASH ON DELIVERY'");
+         $select_cod->execute();
+         $numbers_of_cod = $select_cod->rowCount();
       ?>
-      <h3><?= $numbers_of_users; ?></h3>
+      <h3><?= $numbers_of_cod; ?></h3>
       <p>COD Orders</p>
-      <a href="users_accounts.php" class="btn">View Users</a>
+      <a href="cod_orders.php" class="btn">View Orders</a>
    </div>
 
    <div class="box">
       <?php
-         $select_users = $conn->prepare("SELECT * FROM `users`");
-         $select_users->execute();
-         $numbers_of_users = $select_users->rowCount();
+         $select_gcash = $conn->prepare("SELECT * FROM `orders` WHERE method = 'GCASH'");
+         $select_gcash->execute();
+         $numbers_of_gcash = $select_gcash->rowCount();
       ?>
-      <h3><?= $numbers_of_users; ?></h3>
+      <h3><?= $numbers_of_gcash; ?></h3>
       <p>GCASH Orders</p>
-      <a href="users_accounts.php" class="btn">View Users</a>
+      <a href="gcash_orders.php" class="btn">View Orders</a>
    </div>
 
    <div class="box">

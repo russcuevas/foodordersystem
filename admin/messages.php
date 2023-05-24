@@ -34,8 +34,9 @@ if(isset($_GET['delete'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Messages | Page</title>
-
+    <title>Contact Message | Page</title>
+    <!-- FAVICON LINK -->
+    <link rel="shortcut icon" href="../favicon/contact.png" type="image/x-icon">
     <!-- FONT AWESOME LINK -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
@@ -50,7 +51,7 @@ if(isset($_GET['delete'])){
 
 <!-- MESSAGE STARTS -->
 <section class="messages">
-   <h1 class="heading">messages</h1>
+   <h1 class="heading">Contact Message</h1>
    <div class="box-container">
 
    <?php
