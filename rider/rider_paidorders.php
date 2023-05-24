@@ -9,7 +9,6 @@ if (!isset($riders_id)) {
     header('location:rider_login.php');
 }
 
-// Get the rider's name based on the ID
 $stmt = $conn->prepare("SELECT name FROM riders WHERE id = ?");
 $stmt->execute([$riders_id]);
 $rider = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -29,12 +28,15 @@ $order = $stmt->fetch(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/rider_style.css">
     <title>Receipt Issue</title>
+    <!-- FAVICON LINK -->
     <link rel="shortcut icon" href="../favicon/rider/paid.png" type="image/x-icon">
+    <!-- FONT AWESOME LINK -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- CUSTOM ADMIN CSS FILE -->
     <link rel="stylesheet" href="../css/rider_style.css">
+    <!-- I USE SOME INTERNAL CSS FOR PRINT -->
     <style>
         .print-btn {
             background-color: orange;

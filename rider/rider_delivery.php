@@ -1,6 +1,8 @@
 <?php
 // INCLUDING CONNECTION TO DATABASE
 include '../components/connect.php';
+
+// INCLUDING COMPOSER FOR TEXTING MESSAGE
 require __DIR__ . '/../vendor/autoload.php';
 use Twilio\Rest\Client;
 
@@ -64,6 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rider Delivery</title>
     <link rel="shortcut icon" href="../favicon/rider/delivery.png" type="image/x-icon">
+    <!-- I USE INTERNAL CSS -->
     <style>
         body {
             font-family: Arial, sans-serif;

@@ -42,7 +42,6 @@ if(isset($_SESSION['user_id'])){
 
    <div class="user">
       <?php
-         
       ?>
       <img src="images/user-icon.png" alt="">
       <p><i class="fas fa-user"></i><span><span><?= $fetch_profile['name']; ?></span></span></p>

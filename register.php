@@ -120,7 +120,6 @@ if(isset($_POST['submit'])){
 <!-- CUSTOM JS FILE -->
 <script>
 //  PASSWORD GENERATOR
-// Select the password input and generate password button
 const passwordInput = document.querySelector('input[name="genpass"]');
 const generatePasswordBtn = document.querySelector('#generatePassword');
 

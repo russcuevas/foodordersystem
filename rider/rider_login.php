@@ -1,4 +1,5 @@
-<?php 
+<?php
+// INCLUDING DATABASE CONNECTION
 include '../components/connect.php';
 // SESSION
 session_start();
@@ -37,7 +38,9 @@ if(isset($_POST['submit'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Riders Login</title>
+    <!-- FAVICON LINK -->
     <link rel="shortcut icon" href="../favicon/rider/login.png" type="image/x-icon">
+    <!-- FONT AWESOME LINK -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />

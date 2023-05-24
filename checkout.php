@@ -89,38 +89,38 @@ if (isset($_POST['submit'])) {
 
    <h1 class="title">Order Summary</h1>
 
-   <form action="" method="post" onsubmit="return redirectPaymentMethod();">
+      <form action="" method="post" onsubmit="return redirectPaymentMethod();">
 
-   <div class="cart-items">
-         <h3>Cart Items</h3>
-         <?php
-            $grand_total = 0;
-            $cart_items[] = '';
-            $select_cart = $conn->prepare("SELECT * FROM `cart` WHERE user_id = ?");
-            $select_cart->execute([$user_id]);
-            if($select_cart->rowCount() > 0){
-               while($fetch_cart = $select_cart->fetch(PDO::FETCH_ASSOC)){
-                  $cart_items[] = $fetch_cart['name'].' ('.$fetch_cart['price'].' x '. $fetch_cart['quantity'].') - ';
-                  $total_products = implode($cart_items);
-                  $grand_total += ($fetch_cart['price'] * $fetch_cart['quantity']);
-         ?>
-         <p><span class="name"><?= $fetch_cart['name']; ?></span><span class="price">₱<?= $fetch_cart['price']; ?> x <?= $fetch_cart['quantity']; ?></span></p>
-         <?php
-            }
-            }else{
-               echo '<p class="empty">Your cart is empty!</p>';
-            }
-         ?>
-         <p class="grand-total"><span class="name">GRAND TOTAL :</span><span class="price">₱<?= $grand_total; ?></span></p>
-         <a href="cart.php" class="btn">View Cart</a>
-      </div>
+         <div class="cart-items">
+               <h3>Cart Items</h3>
+               <?php
+                  $grand_total = 0;
+                  $cart_items[] = '';
+                  $select_cart = $conn->prepare("SELECT * FROM `cart` WHERE user_id = ?");
+                  $select_cart->execute([$user_id]);
+                  if($select_cart->rowCount() > 0){
+                     while($fetch_cart = $select_cart->fetch(PDO::FETCH_ASSOC)){
+                        $cart_items[] = $fetch_cart['name'].' ('.$fetch_cart['price'].' x '. $fetch_cart['quantity'].') - ';
+                        $total_products = implode($cart_items);
+                        $grand_total += ($fetch_cart['price'] * $fetch_cart['quantity']);
+               ?>
+               <p><span class="name"><?= $fetch_cart['name']; ?></span><span class="price">₱<?= $fetch_cart['price']; ?> x <?= $fetch_cart['quantity']; ?></span></p>
+               <?php
+                  }
+                  }else{
+                     echo '<p class="empty">Your cart is empty!</p>';
+                  }
+               ?>
+               <p class="grand-total"><span class="name">GRAND TOTAL :</span><span class="price">₱<?= $grand_total; ?></span></p>
+               <a href="cart.php" class="btn">View Cart</a>
+         </div>
    
-      <input type="hidden" name="total_products" value="<?= $total_products; ?>">
-      <input type="hidden" name="total_price" value="<?= $grand_total; ?>" value="">
-      <input type="hidden" name="name" value="<?= $fetch_profile['name'] ?>">
-      <input type="hidden" name="number" value="<?= $fetch_profile['number'] ?>">
-      <input type="hidden" name="email" value="<?= $fetch_profile['email'] ?>">
-      <input type="hidden" name="address" value="<?= $fetch_profile['address'] ?>">
+         <input type="hidden" name="total_products" value="<?= $total_products; ?>">
+         <input type="hidden" name="total_price" value="<?= $grand_total; ?>" value="">
+         <input type="hidden" name="name" value="<?= $fetch_profile['name'] ?>">
+         <input type="hidden" name="number" value="<?= $fetch_profile['number'] ?>">
+         <input type="hidden" name="email" value="<?= $fetch_profile['email'] ?>">
+         <input type="hidden" name="address" value="<?= $fetch_profile['address'] ?>">
    
       <div class="user-info">
          <h3>My Information</h3>
@@ -146,7 +146,6 @@ if (isset($_POST['submit'])) {
          <div id="gcash-info"></div>
          <input type="submit" value="place order" class="btn <?php if($fetch_profile['address'] == ''){echo 'disabled';} ?>" style="width:100%; background:#E0163D; color:#fff;" name="submit">
       </div>
-
 </form>
    
 </section>

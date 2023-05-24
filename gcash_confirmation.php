@@ -89,7 +89,6 @@ if (isset($_SESSION['user_id'])) {
             header('location: gcash_payment.php');
         }
         ?>
-
         </div>
     </div>
 </div>

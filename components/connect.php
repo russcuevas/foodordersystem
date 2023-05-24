@@ -1,9 +1,17 @@
 <?php
 
-    $db_name = 'mysql:host=localhost;dbname=foodorder-system';
-    $user_name = 'root';
-    $user_password = '';
+    $dbname = 'mysql:host=localhost;dbname=foodorder-system';
+    $dbuser = 'root';
+    $dbpass = '';
 
-    $conn = new PDO($db_name, $user_name, $user_password);
+    $conn = new PDO($dbname, $dbuser, $dbpass);
+
+    if(!$conn){
+        echo 'Not Connected to database';
+    }
+    // FOR CHECKING IF THE CONNECTION TO DATABASE IS GOOD
+    //else{
+    //     echo 'Connected Successfully to database';
+    // }
 
 ?>

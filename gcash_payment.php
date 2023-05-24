@@ -2,7 +2,7 @@
 session_start();
 require_once 'components/connect.php';
 
-// Set timezone to Asia/Manila
+// DEFAULT TIME ZONE IN OUR COUNTRY
 date_default_timezone_set('Asia/Manila');
 
 // SESSION CHECK IF USER IS LOGIN
@@ -11,7 +11,6 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-// CHECK IF CART IS EMPTY CANT REDIRECT TO GCASH_PAYMENT.PHP
 $select_cart = $conn->prepare("SELECT * FROM `cart` WHERE user_id = ?");
 $select_cart->execute([$_SESSION['user_id']]);
 if ($select_cart->rowCount() == 0) {

@@ -12,7 +12,8 @@ if (isset($_SESSION['user_id'])) {
     $user_id = '';
     echo "<link rel='shortcut icon' href='favicon/question.png' type='image/x-icon'>
     <div style='background-color: #f8d7da; color: #721c24; padding: 20px; font-size:25px; text-align:center; text-transform: uppercase;'> <a style='text-decoration: underline;' href='login.php'>Login </a> first to see your COD receipt!</div>";
-};
+}
+;
 
 ?>
 
@@ -45,37 +46,38 @@ if (isset($_SESSION['user_id'])) {
       <a href="home.php" class="back-btn">Go Back</a>
       <div class="box-container">
          <?php
-         if ($user_id == '') {
-            // echo '<p class="empty"></p>';
-         } else {
-            $select_orders = $conn->prepare("SELECT * FROM `orders` WHERE user_id = ? AND method = 'CASH ON DELIVERY' AND payment_status = 'Pending'");
-            $select_orders->execute([$user_id]);
-            if ($select_orders->rowCount() > 0) {
-               while ($fetch_orders = $select_orders->fetch(PDO::FETCH_ASSOC)) {
-                  $total_price = $fetch_orders['total_price'];
-                  if ($fetch_orders['method'] == 'CASH ON DELIVERY') {
-                     $total_price = $fetch_orders['total_price'];
-         ?>
+if ($user_id == '') {
+    // echo '<p class="empty"></p>';
+} else {
+    $select_orders = $conn->prepare("SELECT * FROM `orders` WHERE user_id = ? AND method = 'CASH ON DELIVERY' AND payment_status = 'Pending'");
+    $select_orders->execute([$user_id]);
+    if ($select_orders->rowCount() > 0) {
+        while ($fetch_orders = $select_orders->fetch(PDO::FETCH_ASSOC)) {
+            $total_price = $fetch_orders['total_price'];
+            if ($fetch_orders['method'] == 'CASH ON DELIVERY') {
+                $total_price = $fetch_orders['total_price'];
+                ?>
                      <div class="box">
-                        <p>Date Ordered: <span><?= $fetch_orders['placed_on']; ?></span></p>
-                        <p>Name: <span><?= $fetch_orders['name']; ?></span></p>
-                        <p>Email: <span><?= $fetch_orders['email']; ?></span></p>
-                        <p>Number: <span><?= $fetch_orders['number']; ?></span></p>
-                        <p>Address: <span><?= $fetch_orders['address']; ?></span></p>
-                        <p>Payment Method: <span style="color: orange; text-decoration: underline;"><?= $fetch_orders['method']; ?></span></p>
-                        <p>Your orders: <span><?= $fetch_orders['total_products']; ?></span></p>
-                        <p>Total price: <span>₱<?= $total_price; ?></span></p>
-                        <p>Delivery Rider : <span style="color: orange; text-decoration: underline;"><?= $fetch_orders['riders'] ?> </span></p>
-                        <p>Payment status: <span style="color:<?php if ($fetch_orders['payment_status'] == 'Pending') { echo 'red'; };?>"> <?=$fetch_orders['payment_status'];?></span> </p>
+                        <p>Date Ordered: <span><?=$fetch_orders['placed_on'];?></span></p>
+                        <p>Name: <span><?=$fetch_orders['name'];?></span></p>
+                        <p>Email: <span><?=$fetch_orders['email'];?></span></p>
+                        <p>Number: <span><?=$fetch_orders['number'];?></span></p>
+                        <p>Address: <span><?=$fetch_orders['address'];?></span></p>
+                        <p>Payment Method: <span style="color: orange; text-decoration: underline;"><?=$fetch_orders['method'];?></span></p>
+                        <p>Your orders: <span><?=$fetch_orders['total_products'];?></span></p>
+                        <p>Total price: <span>₱<?=$total_price;?></span></p>
+                        <p>Delivery Rider : <span style="color: orange; text-decoration: underline;"><?=$fetch_orders['riders']?> </span></p>
+                        <p>Payment status: <span style="color:<?php if ($fetch_orders['payment_status'] == 'Pending') {echo 'red';}
+                ;?>"> <?=$fetch_orders['payment_status'];?></span> </p>
                      </div>
          <?php
-                  }
-               }
-            } else {
-               echo '<p class="empty">No pending COD orders found.</p>';
-            }
-         }
-         ?>
+}
+        }
+    } else {
+        echo '<p class="empty">No pending COD orders found.</p>';
+    }
+}
+?>
       </div>
    </section>
    <!-- CUSTOMER RECEIPT END -->
