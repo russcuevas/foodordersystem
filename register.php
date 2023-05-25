@@ -1,18 +1,21 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/autoload.php';
 include 'components/connect.php';
 
 session_start();
 
-if(isset($_SESSION['user_id'])){
+if (isset($_SESSION['user_id'])) {
    $user_id = $_SESSION['user_id'];
    header('location:home.php');
-}else{
+} else {
    $user_id = '';
-};
+}
 
-if(isset($_POST['submit'])){
-
+if (isset($_POST['submit'])) {
     $name = $_POST['name'];
     $email = $_POST['email'];
     $number = $_POST['number'];
@@ -26,13 +29,13 @@ if(isset($_POST['submit'])){
     $passnum = preg_match('@[0-9]@', $pass);
     $specialChars = preg_match('@[^\w]@', $pass);
     
-    if(empty($name)){
+    if (empty($name)){
         $message[] = '• Name is required!';
     }
-    elseif(!$uppercase || !$lowercase || !$passnum || !$specialChars || strlen($pass) < 12) {
+    elseif (!$uppercase || !$lowercase || !$passnum || !$specialChars || strlen($pass) < 12) {
         $message[] = '• Password must contain at least 12 characters, including uppercase letters, lowercase letters, and special characters.';
     }
-    else{
+    else {
         $pass = sha1($pass);
         $cpass = sha1($cpass);
      
@@ -40,30 +43,84 @@ if(isset($_POST['submit'])){
         $select_user->execute([$email, $number]);
         $row = $select_user->fetch(PDO::FETCH_ASSOC);
      
-        if($select_user->rowCount() > 0){
+        if ($select_user->rowCount() > 0){
            $message[] = '• Email or number already exists!';
         }
-        else{
-           if($pass != $cpass){
+        else {
+           if ($pass != $cpass) {
               $message[] = '• Confirm password not matched!';
            }
-           else{
-              $insert_user = $conn->prepare("INSERT INTO `users`(name, email, number, address, password) VALUES(?,?,?,?,?)");
-              $insert_user->execute([$name, $email, $number, $address, $cpass]);
-              $select_user = $conn->prepare("SELECT * FROM `users` WHERE email = ? AND password = ?");
-              $select_user->execute([$email, $pass]);
-              $row = $select_user->fetch(PDO::FETCH_ASSOC);
-              if($select_user->rowCount() > 0){
-                $_SESSION['user_id'] = $row['id'];
-                header('location:home.php');
+           else {
+              $verificationCode = generateVerificationCode();
+
+              $insert_user = $conn->prepare("INSERT INTO `users`(name, email, number, address, password, verification_code, status) VALUES(?,?,?,?,?,?,?)");
+              $insert_user->execute([$name, $email, $number, $address, $cpass, $verificationCode, 0]);
+              
+              $verificationSent = sendVerificationEmail($email, $verificationCode);
+              
+              if ($verificationSent) {
+                header("location: verification_pending.php");
+                exit();
+              } else {
+                $message[] = '• Failed to send verification email. Please try again.';
               }
            }
         }
     }
 }
 
-?> 
+/**
+ * 
+ *
+ * @return string
+ */
+function generateVerificationCode() {
+   $characters = '0123456789';
+   $verificationCode = '';
+   $length = 4;
+   
+   for ($i = 0; $i < $length; $i++) {
+   $verificationCode .= $characters[rand(0, strlen($characters) - 1)];
+   }
+   
+   return $verificationCode;
+  }
+  
+/**
+ *
+ *
+ * @param string
+ * @param string
+ * @return bool
+ */
+function sendVerificationEmail($email, $verificationCode) {
+    $mail = new PHPMailer(true);
+    
+    try {
+        $mail->isSMTP();
+        $mail->SMTPDebug = 0;
+        $mail->SMTPAuth = true;
+        $mail->SMTPSecure = 'tls';
+        $mail->Host = 'smtp.gmail.com';
+        $mail->Port = 587;
+        $mail->Username = 'russelarchiefoodorder@gmail.com';
+        $mail->Password = 'shikytxtwosptwao';
 
+        $mail->setFrom('russelarchiefoodorder@gmail.com', 'FOOD ORDER SYSTEM');
+        $mail->addAddress($email, 'Recipient Name');
+        
+        $mail->isHTML(true);
+        $mail->Subject = 'Account Verification';
+        $mail->Body = 'Please click the following link to activate your account: <a href="https://localhost/foodordersystem/verification.php?code=' . $verificationCode . '">Verify Account</a>';
+        
+        $mail->send();
+        
+        return true;
+    } catch (Exception $e) {
+        return false;
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">

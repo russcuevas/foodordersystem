@@ -16,23 +16,20 @@ if(isset($_SESSION['user_id'])){
 
 // LOGIN QUERY
 if(isset($_POST['submit'])){
-
    $email = $_POST['email'];
    $pass = sha1($_POST['pass']);
 
-   $select_user = $conn->prepare("SELECT * FROM `users` WHERE email = ? AND password = ?");
+   $select_user = $conn->prepare("SELECT * FROM `users` WHERE email = ? AND password = ? AND status = 1");
    $select_user->execute([$email, $pass]);
    $row = $select_user->fetch(PDO::FETCH_ASSOC);
 
    if($select_user->rowCount() > 0){
       $_SESSION['user_id'] = $row['id'];
-      header('location:home.php');
+      header('location: home.php');
    }else{
-      $message[] = '• Incorrect username or password!';
+      $message[] = '• Incorrect username or password try again';
    }
-
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -72,8 +69,6 @@ if(isset($_POST['submit'])){
 </section>
 
 <!-- LOGIN FORM END -->
-
-
 
 
 

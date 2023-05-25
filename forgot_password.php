@@ -150,7 +150,7 @@ if(isset($_POST['submit'])){
             $message = '<p style="color: red;">Unable to send password reset instructions. Please try again later.</p>';
         }
     } else {
-        $message = '<p style="color: red;">Email not found in the database.</p>';
+        $message = '<p style="color: red;">Email not found.</p>';
     }
 }
 

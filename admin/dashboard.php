@@ -106,7 +106,7 @@ if(!isset($admin_id)){
 
    <div class="box">
       <?php
-         $select_users = $conn->prepare("SELECT * FROM `users`");
+         $select_users = $conn->prepare("SELECT * FROM `users` WHERE status = 1");
          $select_users->execute();
          $numbers_of_users = $select_users->rowCount();
       ?>

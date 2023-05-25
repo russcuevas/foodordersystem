@@ -54,7 +54,7 @@ if(isset($_GET['delete'])){
     <div class="box-container">
  
     <?php
-       $select_account = $conn->prepare("SELECT * FROM `users`");
+       $select_account = $conn->prepare("SELECT * FROM `users` WHERE status = 1");
        $select_account->execute();
        if($select_account->rowCount() > 0){
           while($fetch_accounts = $select_account->fetch(PDO::FETCH_ASSOC)){  
