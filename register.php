@@ -59,8 +59,8 @@ if (isset($_POST['submit'])) {
               $verificationSent = sendVerificationEmail($email, $verificationCode);
               
               if ($verificationSent) {
-                header("location: verification_pending.php");
-                exit();
+                $message[] = '• Your account registration is in pending verification check your email.';
+               //  exit();
               } else {
                 $message[] = '• Failed to send verification email. Please try again.';
               }

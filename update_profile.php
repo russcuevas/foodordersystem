@@ -100,10 +100,10 @@ if(isset($_POST['submit'])){
 
    <form action="" method="post">
       <h3>Update Profile</h3>
-      <input type="text" name="name" placeholder="<?= $fetch_profile['name']; ?>" class="box" maxlength="50">
-      <input type="email" name="email" placeholder="<?= $fetch_profile['email']; ?>" class="box" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
-      <input type="number" name="number" placeholder="<?= $fetch_profile['number']; ?>" class="box" min="0" max="9999999999" maxlength="11">
-      <input type="text" name="address" required placeholder="<?= $fetch_profile['address']; ?>" class="box">
+      <input type="text" name="name" value="<?= $fetch_profile['name']; ?>" class="box" maxlength="50">
+      <input type="email" name="email" value="<?= $fetch_profile['email']; ?>" class="box" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
+      <input type="number" name="number" value="<?= $fetch_profile['number']; ?>" class="box" min="0" max="9999999999" maxlength="11">
+      <input type="text" name="address" required value="<?= $fetch_profile['address']; ?>" class="box">
       <input type="password" name="old_pass" placeholder="Enter your old password" class="box" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
       <input type="password" name="new_pass" placeholder="Enter your new password" class="box" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
       <input type="password" name="confirm_pass" placeholder="Confirm your new password" class="box" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
@@ -111,19 +111,6 @@ if(isset($_POST['submit'])){
    </form>
 
 </section>
-
-
-
-
-
-
-
-
-
-
-<!-- INCLUDING FOOTER -->
-<?php include 'components/footer.php';?>
-<!-- FOOTER ENDS -->
 
 
 

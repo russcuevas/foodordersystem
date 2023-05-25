@@ -1565,4 +1565,9 @@ section {
         color: #fff;
         transition: color .3s;
     }
+
+    .message span {
+        font-size: 17px;
+        color: #fff;
+    }
 }

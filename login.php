@@ -30,6 +30,15 @@ if(isset($_POST['submit'])){
       $message[] = '• Incorrect username or password try again';
    }
 }
+
+if (isset($_GET['success'])) {
+    echo '<script>alert("Your account has been verified!");</script>';
+}
+
+if (isset($_GET['error'])){
+   echo '<script>alert("Error!");</script>';
+}
+
 ?>
 
 <!DOCTYPE html>
