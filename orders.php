@@ -58,7 +58,7 @@ if ($user_id == '') {
                 $total_price = $fetch_orders['total_price'];
                 ?>
                      <div class="box">
-                        <p>Date Ordered: <span><?=$fetch_orders['placed_on'];?></span></p>
+                        <p>Date Ordered: <span style="color: red;"><?=$fetch_orders['placed_on'];?></span></p>
                         <p>Name: <span><?=$fetch_orders['name'];?></span></p>
                         <p>Email: <span><?=$fetch_orders['email'];?></span></p>
                         <p>Number: <span><?=$fetch_orders['number'];?></span></p>

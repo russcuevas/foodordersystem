@@ -6,8 +6,8 @@ include '../components/connect.php';
 require __DIR__ . '/../vendor/autoload.php';
 use Twilio\Rest\Client;
 
-$sid = "AC1b234dbe251c725f4e03ce448dee6e65";
-$token = "";
+$sid = "AC6edd5553e1464a89d9bfc78a69c96c39";
+$token = "6243722fca01728ce8be302c288e051b";
 $client = new Client($sid, $token);
 
 // SESSION IF NOT LOGIN YOU CAN'T GO TO DIRECT PAGE
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $message = $client->messages->create(
             $formattedPhoneNumber,
             [
-                'from' => '+12525168668',
+                'from' => '+13158955345',
                 'body' => $messageContent
             ]
         );

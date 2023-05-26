@@ -72,7 +72,6 @@ if (isset($_SESSION['user_id'])) {
                 <p style="color: black;">GCASH Name : <span style="color: red; font-weight: 800;"><?= $maskedName ?></span></p>
                 <p style="color: black;">GCASH Number : <span style="color: red; font-weight: 800;"><?= $fetch_order['gcash_num'] ?></span></p>
                 <p style="color: black;">PHP : <span style="color: red; font-weight: 800;">₱<?= $gcash_amount ?></span></p>
-                <p style="color: black;">Your change : <span style="color: red; font-weight: 800">₱<?= $change_amount ?></span></p>
                 <p style="color: black;">Date : <span style="color: red; font-weight: 800;"><?= $fetch_order['placed_on'] ?></span></p>
                 <a href="gcashorders.php" class="btn btn-primary">Check your orders</a>
                 <div class="">

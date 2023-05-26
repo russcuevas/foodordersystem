@@ -2,6 +2,11 @@
 session_start();
 require_once 'components/connect.php';
 
+// Include Twilio PHP library
+require __DIR__ . '/vendor/autoload.php';
+use Twilio\Rest\Client;
+
+
 // DEFAULT TIME ZONE IN OUR COUNTRY
 date_default_timezone_set('Asia/Manila');
 
@@ -89,12 +94,36 @@ if (isset($_POST['submit'])) {
 
         $_SESSION['payment_status'] = $payment_status;
 
+        // Twilio configuration
+        $twilioAccountSid = 'AC6edd5553e1464a89d9bfc78a69c96c39';
+        $twilioAuthToken = '';
+        $twilioPhoneNumber = '+13158955345';
+
+        // Create a Twilio client
+        $client = new Client($twilioAccountSid, $twilioAuthToken);
+
+        // Retrieve the user's phone number
+        $toPhoneNumber = '+63' . substr($number, 1);
+
+        // Compose the message
+        $messageBody = "Hello Mr. $name, you are successfully paid in your orders. Thank you for ordering! Total amount paid: ₱$gcash_amount - Russel Vincent C. Cuevas and Archie De Vera developers of food order system!";
+
+        // Send the message
+        $client->messages->create(
+            $toPhoneNumber,
+            [
+                'from' => $twilioPhoneNumber,
+                'body' => $messageBody
+            ]
+        );
+
         header('location: gcash_confirmation.php');
         exit();
     }
 }
 
 ?>
+
 
 
 <!-- GCASH PAGE -->
@@ -110,11 +139,66 @@ if (isset($_POST['submit'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- STYLE CSS -->
     <link rel="stylesheet" href="css/gcash.css">
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .gcash-logo {
+            display: block;
+            margin: 0 auto;
+            max-width: 200px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #dc3545;
+        }
+        .gcash-form label {
+            font-weight: bold;
+        }
+        .gcash-form select,
+        .gcash-form input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .gcash-form input[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #0c80e0;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .gcash-form input[type="submit"]:hover {
+            background-color: #085797;
+        }
+        .go-back-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .go-back-link a {
+            color: #dc3545;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 	<header>
         <img src="images/gcash-logo.png" alt="">
-        <h1 style="font-size: 20px;">PLEASE FILL UP THE FORM!</h1>
+        <h1 style="font-size: 20px; color: white;">PLEASE FILL UP THE FORM!</h1>
 	</header>
 	<main>
 		<section class="gcash-form">
@@ -140,7 +224,7 @@ if (isset($_POST['submit'])) {
                     <option value="09495748302">09495748302</option>
                     <!-- <option value="09123456789">09123456789</option> -->
                 </select><br>
-                <label for="gcash_amount">GCASH Payment Amount:</label><br>
+                <label for="gcash_amount">GCASH Payment Amount :</label><br>
                 <input type="text" id="gcash_amount" name="gcash_amount" value="<?php echo isset($_POST['gcash_amount']) ? $_POST['gcash_amount'] : '' ?>" 
                 oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 6); if (parseInt(this.value) > 100000) { this.value = '100000'; }" 
                 maxlength="6" placeholder="Please enter your payment here.."><br>
