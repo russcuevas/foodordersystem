@@ -56,7 +56,7 @@ if (isset($_POST['submit'])) {
               $insert_user = $conn->prepare("INSERT INTO `users`(name, email, number, address, password, verification_code, status) VALUES(?,?,?,?,?,?,?)");
               $insert_user->execute([$name, $email, $number, $address, $cpass, $verificationCode, 0]);
               
-              $verificationSent = sendVerificationEmail($email, $verificationCode);
+              $verificationSent = sendVerificationEmail($email, $name, $verificationCode);
               
               if ($verificationSent) {
                 $message[] = '• Your account registration is in pending verification check your email.';
@@ -93,7 +93,7 @@ function generateVerificationCode() {
  * @param string
  * @return bool
  */
-function sendVerificationEmail($email, $verificationCode) {
+function sendVerificationEmail($email, $name, $verificationCode) {
     $mail = new PHPMailer(true);
     
     try {
@@ -108,10 +108,74 @@ function sendVerificationEmail($email, $verificationCode) {
 
         $mail->setFrom('russelarchiefoodorder@gmail.com', 'FOOD ORDER SYSTEM');
         $mail->addAddress($email, 'Recipient Name');
-        
         $mail->isHTML(true);
         $mail->Subject = 'Account Verification';
-        $mail->Body = 'Please click the following link to activate your account: <a href="https://localhost/foodordersystem/verification.php?code=' . $verificationCode . '">Verify Account</a>';
+        
+        $mail->Body = '
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    
+                    .container {
+                        max-width: 600px;
+                        margin: 0 auto;
+                        padding: 20px;
+                    }
+                    
+                    .header {
+                        background-color: #E0163D;
+                        padding: 10px;
+                        text-align: center;
+                    }
+                    
+                    .content {
+                        padding: 20px;
+                        background-color: #ffffff;
+                    }
+                    
+                    .button {
+                        display: inline-block;
+                        margin-top: 20px;
+                        background-color: #E0163D;
+                        padding: 10px 20px;
+                        text-decoration: none;
+                        border-radius: 4px;
+                    }
+        
+                    .footer {
+                        margin-top: 20px;
+                        font-size: 12px;
+                        color: #808080;
+                        text-align: center;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <div class="header">
+                        <h1 style="color: white;">Account Verification</h1>
+                    </div>
+                    <div class="content">
+                        <p>Dear <span style="font-weight: bold;">' . $name . ',</span></p>
+                        <p>Please click the following link to activate your account:</p>
+                        <p><a class="button" style="color: white;" href="https://localhost/foodordersystem/verification.php?code=' . $verificationCode . '">Verify Account</a></p>
+                        <p>If the button above does not work, you can copy and paste the following URL into your browser:</p>
+                        <p>https://localhost/foodordersystem/verification.php?code=' . $verificationCode . '</p>
+                        
+                        <p class="footer" style="text-align: center;">© to Mr. Russel Vincent C. Cuevas &amp; Archie De Vera, developers of the FOOD ORDER SYSTEM<br>
+                        This message was sent to ' . $email . '.<br>
+                        To help keep your account secure, please don\'t forward this email.</p>
+                    </div>
+                </div>
+            </body>
+            </html>
+        ';
         
         $mail->send();
         
@@ -155,11 +219,12 @@ function sendVerificationEmail($email, $verificationCode) {
     <h3>Register to order!</h3>
     <input type="text" name="name" placeholder="Enter your name" class="box" value="<?php echo isset($_POST['name']) ? $_POST['name'] : ''; ?>">
     <input type="email" name="email" required placeholder="Enter your email" class="box" oninput="this.value = this.value.replace(/\s/g, '')" value="<?php echo isset($_POST['email']) ? $_POST['email'] : ''; ?>">
+    <h6 style="text-align: start; color: #6D5D6E; font-size: 13px;">Note : <span style="color: red; font-size:12px;">"Use gmail that is valid"</span></h6>
     <input type="number" name="number" required placeholder="Enter your number" class="box" min="0" max="9999999999" maxlength="11" value="<?php echo isset($_POST['number']) ? $_POST['number'] : ''; ?>">
     <input type="text" name="address" required placeholder="Enter your address" class="box" value="<?php echo isset($_POST['address']) ? $_POST['address'] : ''; ?>">
     <input type="password" name="pass" required placeholder="Enter your password" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
-    <h6 style="text-align: start; color: #6D5D6E; font-size: 13px;">Note : <span style="color: red; font-size:12px;">"Don't give your password to anyone else"</span></h6>
     <input type="password" name="cpass" required placeholder="Confirm your password" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
+    <h6 style="text-align: start; color: #6D5D6E; font-size: 13px;">Note : <span style="color: red; font-size:12px;">"Don't give your password to anyone else"</span></h6>
     <input type="submit" value="register now" name="submit" class="btn">
     <p>Already have an account? <a href="login.php">login now</a></p>
 </form>
