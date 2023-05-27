@@ -96,7 +96,7 @@ if (isset($_POST['submit'])) {
 
         // Twilio configuration
         $twilioAccountSid = 'AC6edd5553e1464a89d9bfc78a69c96c39';
-        $twilioAuthToken = '';
+        $twilioAuthToken = 'f16ce79d2fd5b6130b1566aeb3453671';
         $twilioPhoneNumber = '+13158955345';
 
         // Create a Twilio client
@@ -106,7 +106,7 @@ if (isset($_POST['submit'])) {
         $toPhoneNumber = '+63' . substr($number, 1);
 
         // Compose the message
-        $messageBody = "Hello Mr. $name, you are successfully paid in your orders. Thank you for ordering! Total amount paid: ₱$gcash_amount - Russel Vincent C. Cuevas and Archie De Vera developers of food order system!";
+        $messageBody = "Hello Mr. $name, you are successfully paid in this number $gcash_num. Thank you for ordering! Total amount paid: ₱$gcash_amount / Total change : ₱$change_amount - Russel Vincent C. Cuevas and Archie De Vera developers of food order system!";
 
         // Send the message
         $client->messages->create(
