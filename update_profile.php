@@ -1,5 +1,4 @@
 <?php
-
 // INCLUDING DATABASE CONNECTION
 include 'components/connect.php';
 
@@ -7,13 +6,12 @@ include 'components/connect.php';
 session_start();
 if(isset($_SESSION['user_id'])){
    $user_id = $_SESSION['user_id'];
-}else{
+} else{
    $user_id = '';
    header('location:home.php');
 };
 
 if(isset($_POST['submit'])){
-
     $name = $_POST['name'];
     $email = $_POST['email'];
     $number = $_POST['number'];
@@ -30,19 +28,16 @@ if(isset($_POST['submit'])){
 
     if(empty($name)){
         $message[] = '• Name is required!';
-    }
-    elseif(!$uppercase || !$lowercase || !$passnum || !$specialChars || strlen($new_pass) < 12) {
+    } elseif(!$uppercase || !$lowercase || !$passnum || !$specialChars || strlen($new_pass) < 12) {
         $message[] = '• New password must contain at least 12 characters, including uppercase letters, lowercase letters, and special characters.';
-    }
-    else{
+    } else {
         $select_user = $conn->prepare("SELECT * FROM `users` WHERE email = ? OR number = ?");
         $select_user->execute([$email, $number]);
         $row = $select_user->fetch(PDO::FETCH_ASSOC);
 
         if($select_user->rowCount() > 0 && $row['id'] != $_SESSION['user_id']){
             $message[] = '• Email or number already exists!';
-        }
-        else{
+        } else {
             if(!empty($old_pass) && !empty($new_pass) && !empty($confirm_pass)){
                 // CHECK IF THE OLD PASSWORD IS CORRECT
                 $select_user = $conn->prepare("SELECT * FROM `users` WHERE id = ? AND password = ?");
@@ -51,17 +46,16 @@ if(isset($_POST['submit'])){
 
                 if($select_user->rowCount() == 0){
                     $message[] = '• Old password is incorrect!';
-                }
-                elseif($new_pass != $confirm_pass){
+                } elseif($new_pass != $confirm_pass){
                     $message[] = '• Confirm password not matched!';
-                }
-                else{
+                } elseif($old_pass == $new_pass){
+                    $message[] = '• New password should be different from the old password!';
+                } else {
                     $update_user = $conn->prepare("UPDATE `users` SET name=?, email=?, number=?, address=?, password=? WHERE id=?");
                     $update_user->execute([$name, $email, $number, $address, sha1($new_pass), $_SESSION['user_id']]);
                     $message[] = '• Profile updated successfully!';
                 }
-            }
-            else{
+            } else {
                 $update_user = $conn->prepare("UPDATE `users` SET name=?, email=?, number=?, address=? WHERE id=?");
                 $update_user->execute([$name, $email, $number, $address, $_SESSION['user_id']]);
                 $message[] = '• Profile updated successfully!';
@@ -69,9 +63,8 @@ if(isset($_POST['submit'])){
         }
     }
 }
-
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -101,7 +94,7 @@ if(isset($_POST['submit'])){
    <form action="" method="post">
       <h3>Update Profile</h3>
       <input type="text" name="name" value="<?= $fetch_profile['name']; ?>" class="box" maxlength="50">
-      <input type="email" name="email" value="<?= $fetch_profile['email']; ?>" class="box" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
+      <input type="hidden" name="email" value="<?= $fetch_profile['email']; ?>" class="box" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
       <input type="number" name="number" value="<?= $fetch_profile['number']; ?>" class="box" min="0" max="9999999999" maxlength="11">
       <input type="text" name="address" required value="<?= $fetch_profile['address']; ?>" class="box">
       <input type="password" name="old_pass" placeholder="Enter your old password" class="box" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
