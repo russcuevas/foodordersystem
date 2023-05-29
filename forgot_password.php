@@ -1,15 +1,14 @@
 <?php
 // INCLUDING CONNECTION TO DATABASE
 include 'components/connect.php';
-// SESSIONS
-session_start();
-
-// Include PHPMailer autoloader from vendor directory
 require 'vendor/autoload.php';
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+
+
+// SESSIONS
+session_start();
 
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
@@ -48,9 +47,8 @@ if (isset($_POST['submit'])) {
 
             $mail = new PHPMailer(true);
 
-            // Gmail SMTP configuration
             $mail->isSMTP();
-            $mail->SMTPDebug = 0;  // Set to 2 for debugging information
+            $mail->SMTPDebug = 0;
             $mail->SMTPAuth = true;
             $mail->SMTPSecure = 'tls';
             $mail->Host = 'smtp.gmail.com';
@@ -58,14 +56,11 @@ if (isset($_POST['submit'])) {
             $mail->Username = 'russelarchiefoodorder@gmail.com';
             $mail->Password = 'shikytxtwosptwao';
 
-            // Sender and recipient settings
             $mail->setFrom('russelarchiefoodorder@gmail.com', 'FOOD ORDER SYSTEM');
             $mail->addAddress($email, 'Recipient Name');
 
-            // Email content
             $mail->Subject = 'Password Reset';
 
-            // HTML version
             $mail->Body = '
             <!DOCTYPE html>
             <html>
@@ -130,12 +125,10 @@ if (isset($_POST['submit'])) {
                 </div>
             </body>
             </html>
-        ';
+            ';
     
-            // Plain text version
             $mail->AltBody = 'Dear User, please copy and paste the following URL into your browser to reset your password: https://localhost/foodordersystem/reset_password.php?key=' . $resetToken;
 
-            // Send the email
             if ($mail->send()) {
                 $message = '<p style="color: green;">Password reset instructions have been sent to your email. <a style="color: red; text-decoration: underline;" href="https://accounts.google.com/v3/signin/identifier?dsh=S638507798%3A1684940207096491&continue=https%3A%2F%2Fmail.google.com%2Fmail%2Fu%2F0%2F&emr=1&followup=https%3A%2F%2Fmail.google.com%2Fmail%2Fu%2F0%2F&ifkv=Af_xneG2m22dPmicbTL511Q3gkDlfMt2FuSXQfeubYo3YwUf2vpjHJ8qh8g0Nbupis_rzQZGDdcn&osid=1&passive=1209600&service=mail&flowName=GlifWebSignIn&flowEntry=ServiceLogin" target="_blank">please check here</a>.</p>';
             } else {
