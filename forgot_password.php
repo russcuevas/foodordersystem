@@ -22,7 +22,8 @@ if (isset($_POST['submit'])) {
 
     $query = "SELECT * FROM users WHERE email = :email";
     $stmt = $conn->prepare($query);
-    $stmt->bindParam(':email', $email);
+    // bind param you can only pass variables ; not values
+    $stmt->bindParam(':email', $email); 
     $stmt->execute();
 
     if ($stmt->rowCount() == 1) {
