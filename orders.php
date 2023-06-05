@@ -49,7 +49,7 @@ if (isset($_SESSION['user_id'])) {
 if ($user_id == '') {
     // echo '<p class="empty"></p>';
 } else {
-    $select_orders = $conn->prepare("SELECT * FROM `orders` WHERE user_id = ? AND method = 'CASH ON DELIVERY' AND payment_status = 'Pending'");
+    $select_orders = $conn->prepare("SELECT * FROM `orders` WHERE user_id = ? AND method = 'CASH ON DELIVERY' AND payment_status = 'Pending' OR payment_status = 'To Deliver'");
     $select_orders->execute([$user_id]);
     if ($select_orders->rowCount() > 0) {
         while ($fetch_orders = $select_orders->fetch(PDO::FETCH_ASSOC)) {
@@ -67,14 +67,13 @@ if ($user_id == '') {
                         <p>Your orders: <span><?=$fetch_orders['total_products'];?></span></p>
                         <p>Total price: <span>₱<?=$total_price;?></span></p>
                         <p>Delivery Rider : <span style="color: orange; text-decoration: underline;"><?=$fetch_orders['riders']?> </span></p>
-                        <p>Payment status: <span style="color:<?php if ($fetch_orders['payment_status'] == 'Pending') {echo 'red';}
-                ;?>"> <?=$fetch_orders['payment_status'];?></span> </p>
+                        <p>Payment status: <span style="color:<?php if ($fetch_orders['payment_status'] == 'Pending' || $fetch_orders['payment_status'] == 'To Deliver') {echo 'red';} ?>"> <?=$fetch_orders['payment_status'];?></span> </p>
                      </div>
          <?php
 }
         }
     } else {
-        echo '<p class="empty">No pending COD orders found.</p>';
+        echo '<p class="empty">No COD orders found.</p>';
     }
 }
 ?>

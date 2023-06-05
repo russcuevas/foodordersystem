@@ -25,8 +25,20 @@ if (isset($_POST['update_payment'])) {
    if (isset($_POST['order_id']) && isset($_POST['payment_status'])) {
        $order_id = $_POST['order_id'];
        $payment_status = $_POST['payment_status'];
-       
-       if ($payment_status === 'Paid') {
+
+       if ($payment_status === 'To Deliver'){
+         date_default_timezone_set('Asia/Manila');
+         $formattedDateTime = date('Y-m-d g:i:sA');
+
+         $update_status = $conn->prepare("UPDATE `orders` SET payment_status = ?, placed_on = ? WHERE id = ?");
+         $update_status->execute([$payment_status, $formattedDateTime, $order_id]);
+
+         $update_order = $conn->prepare("UPDATE `orders` SET payment_status = 'To Deliver' WHERE id = ?");
+         $update_order->execute([$order_id]);
+         echo '<script>alert("Payment status updated");</script>';
+         echo '<script>window.location.href = "rider_pendingorders.php"</script>';
+
+       }else if ($payment_status === 'Paid') {
            date_default_timezone_set('Asia/Manila');
            $formattedDateTime = date('Y-m-d g:i:sA');
            
@@ -73,12 +85,12 @@ if (isset($_POST['update_payment'])) {
    <div class="box-container">
       <!-- SELECTING/FETCHING ORDERS QUERY -->
       <?php 
-      $hasPendingOrders = false;
-      foreach ($orders as $order) {
-         if ($order['payment_status'] === 'Pending') {
-            $isHidden = ($order['riders'] !== $rider_name) ? 'hidden' : '';
-            $hasPendingOrders = true;
-      ?>
+$hasPendingOrders = false;
+foreach ($orders as $order) {
+    if ($order['payment_status'] === 'Pending' || $order['payment_status'] === 'To Deliver') {
+        $isHidden = ($order['riders'] !== $rider_name) ? 'hidden' : '';
+        $hasPendingOrders = true;
+        ?>
             <div class="box" <?php echo $isHidden; ?>>
                <p> User ID: <span><?php echo $order['user_id']; ?></span> </p>
                <p> Date ordered: <span><?php echo $order['placed_on']; ?></span> </p>
@@ -93,6 +105,7 @@ if (isset($_POST['update_payment'])) {
                   <input type="hidden" name="order_id" value="<?php echo $order['id']; ?>">
                   <select name="payment_status" class="drop-down">
                      <option value="" selected disabled><?php echo $order['payment_status']; ?></option>
+                     <option value="To Deliver">To Deliver</option>
                      <option value="Paid">Paid</option>
                   </select>
                   <div class="flex-btn">

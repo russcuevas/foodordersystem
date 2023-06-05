@@ -100,6 +100,7 @@ if (isset($_POST['delete_all'])) {
                     <select name="payment_status" class="drop-down">
                     <option value="" selected disabled><?=$fetch_orders['payment_status'];?></option>
                     <option value="Pending">Pending</option>
+                    <option value="To Deliver">To Deliver</option>
                     <option value="Paid">Paid</option>
                     </select>
                     <div class="flex-btn">

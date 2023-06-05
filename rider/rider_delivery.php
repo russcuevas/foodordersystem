@@ -7,7 +7,7 @@ require __DIR__ . '/../vendor/autoload.php';
 use Twilio\Rest\Client;
 
 $sid = "AC6edd5553e1464a89d9bfc78a69c96c39";
-$token = "6243722fca01728ce8be302c288e051b";
+$token = "f16ce79d2fd5b6130b1566aeb3453671";
 $client = new Client($sid, $token);
 
 // SESSION IF NOT LOGIN YOU CAN'T GO TO DIRECT PAGE
