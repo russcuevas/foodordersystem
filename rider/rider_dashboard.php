@@ -60,6 +60,22 @@ $fetch_profile = $select_rider->fetch(PDO::FETCH_ASSOC);
             <p><?= $select_pending; ?></p>
             <a href="rider_pendingorders.php" class="btn">View Pending Orders</a>
         </div>
+
+        <div class="box">
+            <?php
+            $rider_name = $fetch_profile['name'];
+            $total_price = 0;
+            $select_orders = $conn->prepare("SELECT * FROM `orders` WHERE payment_status = 'Paid' AND riders = ?");
+            $select_orders->execute([$rider_name]);
+            while($fetch_orders = $select_orders->fetch(PDO::FETCH_ASSOC)){
+            $total_price += $fetch_orders['total_price'];
+            }
+            ?>
+            <h3>Paid Orders</h3>
+            <p>₱ <?= $total_price; ?></p>
+            <a href="rider_paidorders.php" class="btn">View Paid Orders</a>
+        </div>
+
     </div>
 </section>
     
