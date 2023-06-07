@@ -95,9 +95,9 @@ if (isset($_POST['submit'])) {
         $_SESSION['payment_status'] = $payment_status;
 
         // Twilio configuration
-        $twilioAccountSid = 'AC6edd5553e1464a89d9bfc78a69c96c39';
-        $twilioAuthToken = 'f16ce79d2fd5b6130b1566aeb3453671';
-        $twilioPhoneNumber = '+13158955345';
+        $twilioAccountSid = 'AC06f6f653f72b49511ce80edb53f7bd23';
+        $twilioAuthToken = '9fcdc65ef81674783bb58eb4b297c60b';
+        $twilioPhoneNumber = '+12543293729';
 
         // Create a Twilio client
         $client = new Client($twilioAccountSid, $twilioAuthToken);
