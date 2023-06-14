@@ -87,7 +87,7 @@ $order = $stmt->fetch(PDO::FETCH_ASSOC);
             <!-- DISPLAY LATEST ORDER -->
             <div class="box">
                 <p style="color: #E0163D;"> User ID: <span style="color: black;"><?php echo $order['user_id']; ?></span></p>
-                <p style="color: #E0163D;"> Date ordered: <span style="color: black;"><?php echo $order['placed_on']; ?></span></p>
+                <p style="color: #E0163D;"> Date ordered: <span style="color: green;"><?php echo $order['placed_on']; ?></span></p>
                 <p style="color: #E0163D;"> Name: <span style="color: black;"><?php echo $order['name']; ?></span></p>
                 <p style="color: #E0163D;"> Email: <span style="color: black;"><?php echo $order['email']; ?></span></p>
                 <p style="color: #E0163D;"> Number: <span style="color: black;"><?php echo $order['number']; ?></span></p>

@@ -1,0 +1,50 @@
+ADMIN:
+admin
+Russpogi123!
+
+
+
+USER:
+email: russelcuevas0@gmail.com
+password: Russelpogi123!
+
+email: archiedevera1@gmail.com
+password: iTyi6Fs(wa)o
+
+email: cassandra@gmail.com
+password: 9lNp<Y)n5UO>
+
+email: jonelabad@gmail.com
+password: Russpogi123!
+
+
+
+
+RIDER:
+javie
+Russpogi123!
+
+archie
+Russpogi123!
+
+
+
+Twilio API:
+twilioconsole
+
+russelarchiefoodorder@gmail.com - 09495748302
+Russelpogi123456789
+
+VONAGE API:
+dashboard.nexmo.com
+russelarchiefoodorder@gmail.com - 639385316883
+API Key = 9633af13
+Api Secret = vzx86uC1qucd4ApM
+
+
+PHPMailer:
+russelarchiefoodorder@gmail.com
+Russarch123
+
+
+

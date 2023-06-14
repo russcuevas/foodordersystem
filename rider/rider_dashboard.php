@@ -52,7 +52,7 @@ $fetch_profile = $select_rider->fetch(PDO::FETCH_ASSOC);
 
         <div class="box">
             <?php 
-            $select_orders = $conn->prepare("SELECT * FROM orders WHERE payment_status = 'Pending' AND riders = '{$fetch_profile['name']}'");
+            $select_orders = $conn->prepare("SELECT * FROM orders WHERE payment_status IN ('Pending', 'To Deliver') AND riders = '{$fetch_profile['name']}'");
             $select_orders->execute();
             $select_pending = $select_orders->rowCount();
             ?>

@@ -1,6 +1,7 @@
 {
     "require": {
         "twilio/sdk": "^7.3",
-        "phpmailer/phpmailer": "^6.8"
+        "phpmailer/phpmailer": "^6.8",
+        "vonage/client": "^4.0"
     }
 }

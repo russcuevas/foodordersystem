@@ -2,10 +2,11 @@
 session_start();
 require_once 'components/connect.php';
 
-// Include Twilio PHP library
+// Include Vonage PHP library
 require __DIR__ . '/vendor/autoload.php';
-use Twilio\Rest\Client;
-
+use Vonage\Client\Credentials\Basic;
+use Vonage\Client;
+use Vonage\SMS\Message\SMS;
 
 // DEFAULT TIME ZONE IN OUR COUNTRY
 date_default_timezone_set('Asia/Manila');
@@ -94,28 +95,31 @@ if (isset($_POST['submit'])) {
 
         $_SESSION['payment_status'] = $payment_status;
 
-        // Twilio configuration
-        $twilioAccountSid = 'AC06f6f653f72b49511ce80edb53f7bd23';
-        $twilioAuthToken = '9fcdc65ef81674783bb58eb4b297c60b';
-        $twilioPhoneNumber = '+12543293729';
+        // Vonage (Nexmo) configuration
+        $vonageApiKey = '9633af13';
+        $vonageApiSecret = 'vzx86uC1qucd4ApM';
+        $vonageFromNumber = '639385316883';
 
-        // Create a Twilio client
-        $client = new Client($twilioAccountSid, $twilioAuthToken);
-
-        // Retrieve the user's phone number
-        $toPhoneNumber = '+63' . substr($number, 1);
+        // Create Vonage client
+        $client = new Client(new Basic($vonageApiKey, $vonageApiSecret));
 
         // Compose the message
-        $messageBody = "Hello Mr. $name, you are successfully paid in this number $gcash_num. Thank you for ordering! Total amount paid: ₱$gcash_amount / Total change : ₱$change_amount - Russel Vincent C. Cuevas and Archie De Vera developers of food order system!";
+        $message = new SMS(
+            '639385316883',
+            '639385316883',
+            "Hello $name, you have successfully paid in this number $gcash_num. Thank you for ordering! Total amount paid: $gcash_amount pesos / Total change: $change_amount pesos - Russel Vincent C. Cuevas and Archie De Vera developers of the food order system!"
+        );
 
         // Send the message
-        $client->messages->create(
-            $toPhoneNumber,
-            [
-                'from' => $twilioPhoneNumber,
-                'body' => $messageBody
-            ]
-        );
+        $response = $client->sms()->send($message);
+        $messageStatus = $response->current()->getStatus();
+
+
+        if ($messageStatus == 0) {
+            echo "The message was sent successfully\n";
+        } else {
+            echo "The message failed with status: " . $messageStatus . "\n";
+        }
 
         header('location: gcash_confirmation.php');
         exit();
@@ -123,6 +127,7 @@ if (isset($_POST['submit'])) {
 }
 
 ?>
+
 
 
 

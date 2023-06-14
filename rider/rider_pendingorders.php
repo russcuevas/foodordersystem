@@ -3,12 +3,28 @@
 // INCLUDING CONNECTION TO DATABASE
 include '../components/connect.php';
 
+// INCLUDING COMPOSER FOR TEXTING MESSAGE
+require __DIR__ . '/../vendor/autoload.php';
+use Vonage\Client\Credentials\Basic;
+use Vonage\Client;
+use Vonage\SMS\Message\SMS;
+
+// Vonage (Nexmo) configuration
+$vonageApiKey = '9633af13';
+$vonageApiSecret = 'vzx86uC1qucd4ApM';
+$vonageFromNumber = '639385316883';
+
+// Create Vonage client
+$client = new Client(new Basic($vonageApiKey, $vonageApiSecret));
+
 // SESSION IF NOT LOGIN YOU CAN'T GO TO DIRECT PAGE
 session_start();
-$riders_id = $_SESSION['riders_id'];
-if (!isset($riders_id)) {
-    header('location:rider_login.php');
+if (!isset($_SESSION['riders_id'])) {
+    header('Location: rider_login.php');
+    exit;
 }
+
+$riders_id = $_SESSION['riders_id'];
 
 $stmt = $conn->prepare("SELECT name FROM riders WHERE id = ?");
 $stmt->execute([$riders_id]);
@@ -20,38 +36,64 @@ $stmt = $conn->prepare("SELECT id, name, number, email, address, method, total_p
 $stmt->execute([$riders_id]);
 $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-
 if (isset($_POST['update_payment'])) {
-   if (isset($_POST['order_id']) && isset($_POST['payment_status'])) {
-       $order_id = $_POST['order_id'];
-       $payment_status = $_POST['payment_status'];
+    if (isset($_POST['order_id']) && isset($_POST['payment_status'])) {
+        $order_id = $_POST['order_id'];
+        $payment_status = $_POST['payment_status'];
 
-       if ($payment_status === 'To Deliver'){
-         date_default_timezone_set('Asia/Manila');
-         $formattedDateTime = date('Y-m-d g:i:sA');
+        if ($payment_status === 'To Deliver') {
+            date_default_timezone_set('Asia/Manila');
+            $formattedDateTime = date('Y-m-d g:i:sA');
 
-         $update_status = $conn->prepare("UPDATE `orders` SET payment_status = ?, placed_on = ? WHERE id = ?");
-         $update_status->execute([$payment_status, $formattedDateTime, $order_id]);
+            $update_status = $conn->prepare("UPDATE `orders` SET payment_status = ?, placed_on = ? WHERE id = ?");
+            $update_status->execute([$payment_status, $formattedDateTime, $order_id]);
 
-         $update_order = $conn->prepare("UPDATE `orders` SET payment_status = 'To Deliver' WHERE id = ?");
-         $update_order->execute([$order_id]);
-         echo '<script>alert("Payment status updated");</script>';
-         echo '<script>window.location.href = "rider_pendingorders.php"</script>';
+            $update_order = $conn->prepare("UPDATE `orders` SET payment_status = 'To Deliver' WHERE id = ?");
+            $update_order->execute([$order_id]);
 
-       }else if ($payment_status === 'Paid') {
-           date_default_timezone_set('Asia/Manila');
-           $formattedDateTime = date('Y-m-d g:i:sA');
-           
-           $update_status = $conn->prepare("UPDATE `orders` SET payment_status = ?, placed_on = ? WHERE id = ?");
-           $update_status->execute([$payment_status, $formattedDateTime, $order_id]);
-           
-           $update_order = $conn->prepare("UPDATE `orders` SET payment_status = 'Paid' WHERE id = ?");
-           $update_order->execute([$order_id]);
-           header('location: rider_pendingorders.php');
-       }
-   } else {
-       $message[] = 'Please choose again!';
-   }
+            $order = $conn->prepare("SELECT number FROM orders WHERE id = ?");
+            $order->execute([$order_id]);
+            $userNumber = $order->fetchColumn();
+
+            if ($userNumber) {
+                $formattedPhoneNumber = '+63' . substr($userNumber, 1);
+                $messageContent = "Hello I am {$rider_name}, your order is out for delivery. Thank you for your patience!";
+
+                $message = new SMS(
+                    $vonageFromNumber,
+                    $formattedPhoneNumber,
+                    $messageContent
+                );
+
+                $response = $client->sms()->send($message);
+                $messageStatus = $response->current()->getStatus();
+
+                if ($messageStatus == 0) {
+                    echo '<script>alert("Payment status updated and message sent.");</script>';
+                    echo '<script>window.location.href = "rider_pendingorders.php"</script>';
+                } else {
+                    echo '<script>alert("Payment status updated, but failed to send message. Error: ' . $response->current()->getErrorText() . '");</script>';
+                    echo '<script>window.location.href = "rider_pendingorders.php"</script>';
+                }
+            } else {
+                echo '<script>alert("Payment status updated, but failed to retrieve user number.");</script>';
+                echo '<script>window.location.href = "rider_pendingorders.php"</script>';
+            }
+        } else if ($payment_status === 'Paid') {
+            date_default_timezone_set('Asia/Manila');
+            $formattedDateTime = date('Y-m-d g:i:sA');
+
+            $update_status = $conn->prepare("UPDATE `orders` SET payment_status = ?, placed_on = ? WHERE id = ?");
+            $update_status->execute([$payment_status, $formattedDateTime, $order_id]);
+
+            $update_order = $conn->prepare("UPDATE `orders` SET payment_status = 'Paid' WHERE id = ?");
+            $update_order->execute([$order_id]);
+            header('Location: rider_pendingorders.php');
+            exit;
+        }
+    } else {
+        $message[] = 'Please choose again!';
+    }
 }
 
 
